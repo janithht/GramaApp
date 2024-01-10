@@ -19,7 +19,7 @@ type UserNotFound record{|
     ErrorDetails body;
 |};
 
-mysql:Client nationalDb = check new("localhost", "root","password","nationaldb", 3306);
+mysql:Client nationalDb = check new("localhost", "root","1234","nationaldb", 3306);
 
 service /identityCheck on new http:Listener(9090) {
     resource function get users() returns User[]|error {
