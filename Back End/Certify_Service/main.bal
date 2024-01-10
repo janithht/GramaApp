@@ -1,6 +1,7 @@
 import ballerina/http;
 import ballerina/time;
 import ballerinax/mysql;
+import ballerinax/mysql.driver as _;
 import ballerina/sql;
 
 
