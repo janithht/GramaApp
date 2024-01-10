@@ -22,11 +22,14 @@ type UserNotFound record{|
 mysql:Client nationalDb = check new("localhost", "root","password","nationaldb", 3306);
 
 service /identityCheck on new http:Listener(9090) {
+
+    //Get List of users
     resource function get users() returns User[]|error {
         stream<User, sql:Error?> userStream = nationalDb->query(`SELECT * FROM users`);
         return from var user in userStream select user;
     }
 
+    //Check for exisiting user by NIC
     resource function get users/[int NIC]() returns User|UserNotFound|error {
         User|sql:Error user = nationalDb->queryRow(`SELECT * FROM users WHERE NIC = ${NIC}`);  
         if user is sql:NoRowsError {
