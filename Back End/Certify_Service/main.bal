@@ -4,8 +4,14 @@ import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
 import ballerina/sql;
 
+configurable string HOST = ?;
+configurable string USER = ?;
+configurable string PASSWORD = ?;
+configurable string DATABASE = ?;
+configurable int PORT = ?;
 
-mysql:Client certifyDb = check new("localhost", "root","password","certifydb", 3306);
+
+mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
 
 type Request record{|
     readonly int req_id;

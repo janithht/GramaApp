@@ -3,6 +3,12 @@ import ballerina/time;
 import ballerinax/mysql;
 import ballerina/sql;
 
+configurable string HOST = ?;
+configurable string USER = ?;
+configurable string PASSWORD = ?;
+configurable string DATABASE = ?;
+configurable int PORT = ?;
+
 public type User record{|
     readonly int NIC;
     string name;
@@ -19,7 +25,7 @@ type UserNotFound record{|
     ErrorDetails body;
 |};
 
-mysql:Client nationalDb = check new("localhost", "root","password","nationaldb", 3306);
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
 
 service /identityCheck on new http:Listener(9090) {
 
