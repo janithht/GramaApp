@@ -1,0 +1,16 @@
+[package]
+org = "ravinduthiunuwan"
+name = "police_check_service"
+version = "0.1.0"
+distribution = "2201.8.4"
+
+[build-options]
+observabilityIncluded = true
+
+[[platform.java11.dependency]]
+groupId = "mysql"
+artifactId = "mysql-connector-java"
+version = "8.0.26"
+
+[[platform.java11.dependency]]
+# path = "/path/to/mysql/driver.jar”
