@@ -15,14 +15,23 @@ mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, data
 
 type Request record{|
     readonly int req_id;
-    int NIC;
+    readonly int NIC;
     string address;
     string status;
 |};
 
+public type Address record{|
+    string no;
+    string street1;
+    string street2;
+    string city;
+    string postalcode;
+|};
+
+
 type NewRequest record{|
     int NIC;
-    string address;
+    Address address;
 |};
 
 type UpdateStatus record{|
@@ -44,9 +53,11 @@ service /certificateRequest on new http:Listener(9091) {
 
     //Submit Certificate Request
     resource function post requests(NewRequest newRequest) returns http:Created|error {
+
+        string addressString = newRequest.address.toString();
        _ = check certifyDb->execute(`
        INSERT INTO certificaterequest(nic, address, status)
-       VALUES (${newRequest.NIC}, ${newRequest.address}, 'Pending');`);
+       VALUES (${newRequest.NIC}, ${addressString}, 'Pending');`);
        return http:CREATED;
     }
 

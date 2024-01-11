@@ -11,8 +11,13 @@ configurable int PORT = ?;
 
 public type User record{|
     readonly int NIC;
-    string name;
+    string fname;
+    string lname;
+    string gender;
+    string dob;
+    string address;
 |};
+
 
 type ErrorDetails record{
     string message;
