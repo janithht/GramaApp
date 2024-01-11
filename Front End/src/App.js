@@ -1,7 +1,7 @@
 import React from "react";
 import { AuthProvider } from "@asgardeo/auth-react";
 
-import Auth from "./Auth.js";
+import Auth from "./Authentication/Auth.js";
 
 function App() {
   console.log(process.env.REACT_APP_CLIENT_ID);
