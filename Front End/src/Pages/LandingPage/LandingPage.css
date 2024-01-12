@@ -1,0 +1,79 @@
+/* LandingPage.css */
+
+.landing-page {
+  text-align: center;
+  padding: 20px;
+}
+
+h1 {
+  display: inline-block;
+}
+
+main {
+  margin: 20px 0;
+}
+
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10%;
+}
+
+.welcome-image {
+  width: 50%;
+  height: 30%;
+  margin-right: 20px;
+}
+
+.welcome-text {
+  max-width: 500px;
+  text-align: left;
+}
+
+.welcome-header {
+  font-size: 35px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.welcome-message {
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #9013fe;
+  color: #fff;
+  padding: 10px 20px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  border-radius: 18px;
+}
+
+button:hover {
+  background-color: #3e0570;
+}
+
+footer {
+  margin-top: 20px;
+  color: #777;
+}
+
+@media screen and (max-width: 768px) {
+  .welcome-container {
+    flex-direction: column;
+  }
+  .welcome-image {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
+  }
+  .welcome-text {
+    text-align: center;
+  }
+  
+}
