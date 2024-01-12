@@ -1,5 +1,13 @@
 import React from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
+<<<<<<< Updated upstream
+=======
+import Dashboard from "../Pages/Dashboard/dashboard";
+import "./Auth.css";
+// import Button from "../Components/Button/button";
+import Landing from "../Pages/Landing/landing";
+import Button from "../Components/Button/button"
+>>>>>>> Stashed changes
 
 function Auth() {
 
@@ -33,14 +41,22 @@ console.log("username: ",state.username);
         state.isAuthenticated
           ? (
             <div>
-              <ul>
+              {/* <ul>
                 <li>{state.username}</li>
+<<<<<<< Updated upstream
               </ul>
 
               <button onClick={() => signOut()}>Logout</button>
+=======
+              </ul> */}
+            <Dashboard/>
+              <Button onClick={() => signOut()}>Logout</Button>
+>>>>>>> Stashed changes
             </div>
           )
-          : <button onClick={() => signIn()}>Login</button>
+          // : <Button onClick={() => signIn()}>Login</Button>
+          : <Landing />
+
       }
     </div>
   );

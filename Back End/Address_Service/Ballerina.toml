@@ -6,3 +6,9 @@ distribution = "2201.8.4"
 
 [build-options]
 observabilityIncluded = true
+
+[[platform.java11.dependency]]
+groupId = "mysql"
+artifactId = "mysql-connector-java"
+version = "8.0.26"
+path = "C:/mysql-connector-j-8.2.0.jar"
