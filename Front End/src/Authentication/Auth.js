@@ -1,6 +1,6 @@
 import React from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
-
+import Dashboard from "../Pages/Dashboard/dashboard";
 function Auth() {
 
   const { state, signIn, signOut } = useAuthContext();
@@ -36,7 +36,7 @@ console.log("username: ",state.username);
               <ul>
                 <li>{state.username}</li>
               </ul>
-
+            <Dashboard/>
               <button onClick={() => signOut()}>Logout</button>
             </div>
           )
