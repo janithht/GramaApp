@@ -4,13 +4,14 @@ import LandingPage from "../Pages/LandingPage/LandingPage";
 
 function Auth() {
 
-  const { state, signIn, signOut,getAccessToken  } = useAuthContext();
+  const { state, signOut, getDecodedIDToken   } = useAuthContext();
+  console.log(getDecodedIDToken );
 
   useEffect(() => {
-    getAccessToken ().then((idToken) => {
-        console.log(idToken);
+    getDecodedIDToken().then((idToken) => {
+        console.log(idToken.tenant_domain);
     }).catch((error) => {
-        console.log(error);
+        console.log(error); 
     })
 }, []);
 

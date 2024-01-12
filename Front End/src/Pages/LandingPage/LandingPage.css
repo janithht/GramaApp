@@ -1,8 +1,11 @@
-/* LandingPage.css */
 
 .landing-page {
   text-align: center;
   padding: 20px;
+}
+.landing-page-header-logo-image{
+  width: 25%;
+  height: 25%;
 }
 
 h1 {
@@ -17,13 +20,12 @@ main {
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-top: 10%;
 }
 
 .welcome-image {
-  width: 50%;
+  width: 30%;
   height: 30%;
-  margin-right: 20px;
+  margin-right: 2%;
 }
 
 .welcome-text {
@@ -44,7 +46,7 @@ main {
 }
 
 button {
-  background-color: #9013fe;
+  background-color: #4613fe;
   color: #fff;
   padding: 10px 20px;
   font-size: 16px;
@@ -55,7 +57,7 @@ button {
 }
 
 button:hover {
-  background-color: #3e0570;
+  background-color: #050770;
 }
 
 footer {
@@ -64,6 +66,10 @@ footer {
 }
 
 @media screen and (max-width: 768px) {
+  .landing-page-header-logo-image{
+    width: 50%;
+    height: 50%;
+  }
   .welcome-container {
     flex-direction: column;
   }
