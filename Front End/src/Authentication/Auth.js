@@ -1,5 +1,6 @@
 import React from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
+
 import Dashboard from "../Pages/Dashboard/dashboard";
 function Auth() {
 
