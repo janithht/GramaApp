@@ -1,6 +1,7 @@
 import React,{useEffect} from "react";
 import { useAuthContext  } from "@asgardeo/auth-react";
 import LandingPage from "../Pages/LandingPage/LandingPage";
+import Dashboard from "../Pages/Dashboard/dashboard";
 
 function Auth() {
 
