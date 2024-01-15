@@ -2,6 +2,7 @@ import ballerina/http;
 import ballerina/time;
 import ballerinax/mysql;
 import ballerina/sql;
+import ballerina/io;
 
 configurable string HOST = ?;
 configurable string USER = ?;
@@ -13,6 +14,7 @@ public type User record{|
     readonly int NIC;
     string fname;
     string lname;
+    string contactNo;
     string gender;
     string dob;
     string address;
@@ -47,6 +49,7 @@ service /identityCheck on new http:Listener(9090) {
             UserNotFound userNotFound = {
                 body: {message: string `id: ${NIC}`, details: string `user/${NIC}`, timeStamp: time:utcNow()}
             };
+            io:println("User not found");
             return userNotFound;
         }
         return user;
