@@ -1,24 +1,29 @@
-import ballerina/http;
+// import ballerina/http;
 import ballerina/io;
 import ballerinax/slack;
 
-service /slackService on new http:Listener(9090) {
-    resource function post postMessagesToSlack(string username, string email, string message) returns error? {
-        slack:ConnectionConfig slackConfig = {
-            auth: {
-                token: "xxxx-xxxxxxxxx-xxxx"
-            }
-        };
+configurable string token = ?;
 
-        slack:Client slackClient = check new (slackConfig);
+// service /slackService on new http:Listener(9090) {
+// resource function post postMessagesToSlack(string username, string email, string message) returns error? {
+public function main(string message) returns error? {
 
-        slack:Message messageParams = {
-            channelName: "grama_",
-            text: "Hello! I am " + username + " and my email is " + email + ". " + message
-        };
+    slack:ConnectionConfig slackConfig = {
+        auth: {
+            token
+        }
+    };
 
-        string stringResult = check slackClient->postMessage(messageParams);
-        io:println(stringResult);
-    }
+    slack:Client slackClient = check new (slackConfig);
+
+    slack:Message messageParams = {
+        channelName: "grama_",
+        // text: "Hello"
+        text: message
+    };
+
+    string stringResult = check slackClient->postMessage(messageParams);
+    io:println(stringResult);
 }
-
+// }
+// }
