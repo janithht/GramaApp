@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './menubar.css'; // You can style your menu bar in a separate CSS file
+import './menubar.css'; 
 import Button from "../Button/button"
 import { useAuthContext } from '@asgardeo/auth-react';
 
