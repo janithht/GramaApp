@@ -1,35 +1,32 @@
 import React from 'react';
 import MenuBar from '../../Components/MenuBar/menubar.jsx';
 import "../../Components/MenuBar/menubar.css";
-import { PiCertificateLight } from "react-icons/pi";
-import { TbStatusChange } from "react-icons/tb";
-import { IoMdHelp } from "react-icons/io";
+import applyCertificate from "../../Assets/Apply.png";
+import statusCheck from "../../Assets/Status.png";
+import help from "../../Assets/Help.png";
 import './dashboard.css';
+import Tile from "../../Components/Tile/tile.jsx"
+import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
-    return (
-      <div>
-        <MenuBar />
-          <div className="main-container"> {/* Added a wrapper div with class "big-box" */}
-            <div className="menu-container">
-              <button className="menu-button">
-                <PiCertificateLight className="icon" />
-                Apply for Grama Certificate
-              </button>
-      
-              <button className="menu-button">
-                <TbStatusChange className="icon" />
-                Check Status
-              </button>
-      
-              <button className="menu-button">
-                <IoMdHelp className="icon" />
-                Help
-              </button>
-            </div>
-          </div>
+
+const navigate = useNavigate();
+
+  return (
+    <div>
+        <div className='container'>
+            <MenuBar />
         </div>
-      );
-    };
+        <div className="main-container"> 
+            <p className='welcome-heading'>Welcome to Grama Check!</p>
+            <div className="menu-container">
+                <Tile text="Apply for Certificate" image={applyCertificate} onClick={() => navigate('/application')}/>
+                <Tile text="Check the Status" image={statusCheck}  />
+                <Tile text="Ask for Help" image={help}  />
+            </div>
+        </div>
+    </div>
+  );
+};
 
 export default Dashboard;

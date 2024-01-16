@@ -1,0 +1,33 @@
+.custom-input {
+    padding: 10px;
+    margin: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    transition: border-color 0.3s ease;
+    width: 100%;
+  }
+  
+  .custom-input:focus {
+    border-color: #BA68C8;
+  }
+  
+  /* Additional Styles to Reset Anchor Styles */
+  .custom-input,
+  .custom-input:focus,
+  .custom-input:active {
+    outline: none;
+  }
+
+  .custom-input select {
+    border-radius: 0; /* Remove border-radius for the select element */
+  }
+  
+  /* Media Query for Mobile Responsive */
+  @media (max-width: 1000px) {
+    .custom-input {
+      max-width: calc(50% - 50px);
+      width: 100%;
+      box-sizing: border-box;
+    }
+  }
+  

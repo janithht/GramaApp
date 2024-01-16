@@ -1,0 +1,57 @@
+/* .custom-button {
+    padding: 10px;
+    background-color:#BA68C8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    text-decoration: none;
+    display: inline-block;
+    transition: background-color 0.3s;
+    margin-right: 10px;
+  }
+  
+  .custom-button:hover {
+    background-color: red;
+  }
+   */
+
+.custom-button {
+  width: fit-content;
+  background-color: #BA68C8; 
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  text-decoration: none; 
+  color: #fff; 
+}
+
+.custom-button:hover {
+  background-color: #A05B9D; /* Change color on hover */
+}
+
+/* Additional Styles to Reset Anchor Styles */
+.custom-button,
+.custom-button:hover,
+.custom-button:active,
+.custom-button:visited {
+  text-decoration: none;
+  color: #fff; /* Text color */
+}
+
+/* Media Query for Mobile Responsive */
+@media (max-width: 1000px) {
+  .custom-button {
+    max-width: calc(50% - 50px);
+    width: 100%;
+    height: auto; 
+    box-sizing: border-box;
+  }
+}

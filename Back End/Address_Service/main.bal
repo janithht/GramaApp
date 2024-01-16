@@ -29,34 +29,39 @@ type AddressMismatch record {
     ErrorDetails body;
 };
 
-mysql:Client Citizendb = check new ("localhost", "root", "admin321", "citizendb", 3306);
+configurable string HOST = ?;
+configurable string USER = ?;
+configurable string PASSWORD = ?;
+configurable string DATABASE = ?;
+configurable int PORT = ?;
+
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
 
 service /addressCheck on new http:Listener(9092) {
-    resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error {
+    resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error |int {
         
-        Citizen|sql:Error user = Citizendb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
 
         if user is sql:NoRowsError {  // User Not Found
             UserNotFound userNotFound= {
                 body: {message: string `user not found`, details: string `USER ${citizen.nic}`, timeStamp: time:utcNow()}
             };
 
-            return userNotFound;
+            return 1;
 
         }else if user is sql:Error { //Other SQL Errors
-            return error("Internal server error 1");
+            return 1;
 
         }else if user is Citizen {
             if (isEqual(citizen.addressNumber,user.addressNumber) && isEqual(citizen.street1,user.street1) && isEqual(citizen.street2,user.street2) && isEqual(citizen.city,user.city) ) {
                 
-                return user;
+                return 0;
 
             } else {
                 AddressMismatch addressMismatch = {
                     body: {message: string `Address Mismatch`, details: string `USER ${citizen.nic}`, timeStamp: time:utcNow()}
                 };
-                
-                return addressMismatch;
+                return 1;
             }
         }
         
