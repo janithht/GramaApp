@@ -29,7 +29,7 @@ type CriminalRecord record {|
 |};
 
 type CriminalRecordResponse record {|
-    boolean isCriminalRecords;
+    int isCriminalRecords;
     CriminalRecord [] userCriminalRecords;
 |};
 
@@ -58,12 +58,12 @@ CriminalRecord [] criminalRecords = [];
     if criminalRecords.length() >0 {
 
         criminalRecordResponse= {
-        isCriminalRecords: true,
+        isCriminalRecords:1,
         userCriminalRecords:criminalRecords
         };
     }else{
         criminalRecordResponse= {
-        isCriminalRecords: false,
+        isCriminalRecords:0,
         userCriminalRecords:criminalRecords
         };
     }

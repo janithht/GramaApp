@@ -52,6 +52,25 @@ public type Request record{|
 |};
 
 
+type CriminalRecord record {|
+  int convictionID; 
+  string offendersNIC;
+  string offenderName;
+  string offenseType;
+  time:Date convictionDate;
+  string sentencingCourt;
+  string penalty;
+  boolean isConvicted;
+  int severityLevel;
+
+|};
+
+type CriminalRecordResponse record {|
+    int isCriminalRecords;
+    CriminalRecord [] userCriminalRecords;
+|};
+
+
 
 // police check service
 final http:Client policeCheckClient = check new (POLICE_CHECK_SERVICE);
@@ -70,10 +89,12 @@ function addCertificateRequest(NewRequest req) returns int|error {
     string encodedAddress = check url:encode(req.address.toString(), "UTF-8");
 
     // get police_check value from police check service
-    int police_check = check policeCheckClient->get("/policeCheck/checkCriminalRecords/?Id="+req.NIC);
-    
+    CriminalRecordResponse police_check = check policeCheckClient->get("/policeCheck/checkCriminalRecords/?Id="+req.NIC);
+    int  isCR = police_check.isCriminalRecords;    
+    //  1--> have criminal records
+    //  0-->no criminal records
 
-    
+
     //returns the exist_id if there's a user
     int exist_Id = check identityClient->get("/identityCheck/users?id="+req.NIC);
 
