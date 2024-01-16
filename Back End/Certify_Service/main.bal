@@ -102,26 +102,34 @@ function addCertificateRequest(NewRequest req) returns int|error {
         VALUES (${req.division_id},${req.NIC}, ${Id_check}, ${address_check}, ${police_check}, ${request_status},${date})`);
     int|string? lastInsertId = result.lastInsertId;
     if lastInsertId is int {
+        //update Status
+        int _ = check updateStatus(lastInsertId, police_check, Id_check, address_check);
         return lastInsertId;
     } 
     else {
         return error("Unable to obtain last insert ID");
     }
+
 }
 
 
-function updateStatus(int status, int id) returns int|error{
+function updateStatus(int id, int policeCheck, int identityCheck, int addressCheck) returns int|error {
+    int status = (policeCheck == 0 && identityCheck == 0 && addressCheck == 0) ? 1 : 2;  // 1=approved, 2=rejected
+
     sql:ExecutionResult result = check certifyDb->execute(`
         UPDATE certificaterequest
         SET status = ${status}
         WHERE request_id = ${id}`);
-    int|string? lastInsertId = result.affectedRowCount;
-    if lastInsertId is int {
-        return lastInsertId;
+    
+    int|string? affectedRowCount = result.affectedRowCount;
+
+    if affectedRowCount is int {
+        return affectedRowCount;
     } else {
-        return error("Unable to obtain last insert ID");
+        return error("Unable to obtain affected row count");
     }
 }
+
 
 
 
