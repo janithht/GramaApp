@@ -20,10 +20,4 @@ service /gramaCertificate on new http:Listener(9093) {
         return addCertificateRequest(req);
     }
 
-
-    resource function patch updateStatus(int status, int id) returns int|error? {
-        return updateStatus(status, id);
-
-    }
-
 }
