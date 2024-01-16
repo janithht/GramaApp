@@ -38,7 +38,7 @@ configurable int PORT = ?;
 mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
 
 service /addressCheck on new http:Listener(9092) {
-    resource function post address(Citizen citizen) returns int {
+    resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error {
         
         Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
 

@@ -1,7 +1,9 @@
 import ballerina/http;
 import ballerina/time;
 import ballerinax/mysql;
+import ballerinax/mysql.driver as _;
 import ballerina/sql;
+import ballerina/io;
 
 configurable string HOST = ?;
 configurable string USER = ?;
@@ -10,9 +12,10 @@ configurable string DATABASE = ?;
 configurable int PORT = ?;
 
 public type User record{|
-    readonly int NIC;
+    readonly string NIC;
     string fname;
     string lname;
+    string contactNo;
     string gender;
     string dob;
     string address;
@@ -34,22 +37,19 @@ mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, dat
 
 service /identityCheck on new http:Listener(9090) {
 
-    //Get List of users
-    resource function get users() returns User[]|error {
-        stream<User, sql:Error?> userStream = nationalDb->query(`SELECT * FROM users`);
-        return from var user in userStream select user;
-    }
 
     //Check for exisiting user by NIC
-    resource function get users/[int NIC]() returns User|UserNotFound|error {
+    //Output: IF a user exists returns o
+    resource function get users(string NIC) returns int|error {
         User|sql:Error user = nationalDb->queryRow(`SELECT * FROM users WHERE NIC = ${NIC}`);  
         if user is sql:NoRowsError {
-            UserNotFound userNotFound = {
-                body: {message: string `id: ${NIC}`, details: string `user/${NIC}`, timeStamp: time:utcNow()}
-            };
-            return userNotFound;
+            io:println("User not found");
+            return 1;
+        } else {
+            // User found
+            io:println("User found");
+            return 0;
         }
-        return user;
     }
 
 }
