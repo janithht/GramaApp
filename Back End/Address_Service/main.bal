@@ -31,7 +31,7 @@ type AddressMismatch record {
 
 mysql:Client Citizendb = check new ("localhost", "root", "admin321", "citizendb", 3306);
 
-service /address\-check on new http:Listener(8080) {
+service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error {
         
         Citizen|sql:Error user = Citizendb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
