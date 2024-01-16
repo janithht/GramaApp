@@ -99,8 +99,6 @@ function addCertificateRequest(NewRequest req) returns int|error {
     int exist_Id = check identityClient->get("/identityCheck/users?id="+req.NIC);
 
 
-    int Id_check = exist_Id > 0 ? 1 : 0;
-
     // get address_check value from address check service
     int address_check = check addressCheckClient->get(string `/addressCheck/check_user_address_and_division?addressId=${exist_Id}&userAddress=${encodedAddress}`);
 
@@ -120,11 +118,11 @@ function addCertificateRequest(NewRequest req) returns int|error {
     // insert certificate request to database with police_check value
     sql:ExecutionResult result = check certifyDb->execute(`
         INSERT INTO certificaterequest (division_id,NIC, id_check, address_check, police_check, status,date_submitted)
-        VALUES (${req.division_id},${req.NIC}, ${Id_check}, ${address_check}, ${police_check}, ${request_status},${date})`);
+        VALUES (${req.division_id},${req.NIC}, ${exist_Id}, ${address_check}, ${isCR}, ${request_status},${date})`);
     int|string? lastInsertId = result.lastInsertId;
     if lastInsertId is int {
         //update Status
-        int _ = check updateStatus(lastInsertId, police_check, Id_check, address_check);
+        int _ = check updateStatus(lastInsertId, isCR, exist_Id, address_check);
         return lastInsertId;
     } 
     else {
