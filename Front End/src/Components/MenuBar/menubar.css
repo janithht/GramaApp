@@ -1,58 +1,9 @@
-/* menubar.css
-
-.menu-bar {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  padding: 15px;
-  background-color: #BA68C8;
-  color: #ffffff;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  justify-content: space-between;
-}
-
-.menu-header {
-  margin-bottom: 10px;
-}
-
-.menu-bar p {
-  font-size: 1.5em;
-  margin: 0;
-}
-
-.menu-items {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-.logout-button {
-  background-color: #fff;
-  color: #BA68C8;
-
-} */
-
-/* @media (min-width: 768px) {
-  .menu-bar {
-    flex-direction: row;
-    justify-content: space-between; 
-  }
-
-  .menu-items {
-    width: auto;
-  }
-
-  .logout-button{
-    width: auto;
-  }
-} */
-
 .menu-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 10px;
-  background-color: #BA68C8;
+  padding: 10px 40px;
+  background-color: hsl(291, 47%, 60%);
   color: white;
 }
 
@@ -61,19 +12,28 @@
   margin: 0;
 }
 
+.nav-menu{
+  display: flex;
+  flex-direction: row;
+}
+
 .menu-icon {
   cursor: pointer;
   display: none; 
 }
 
-.main-menu-btn{
-  background-color: #BA68C8;
-  border: none;
+.menu-icon:hover {
+  background-color: #A05B9D;
+  padding: 0px 4px;
 }
 
-.main-menu-btn :hover{
-  background-color: white;
-  border: none;
+.menu-icon:active {
+  background-color: #A05B9D;
+  padding: 0px 4px;
+}
+
+.menu-btn{
+  border: none !important;
 }
 
 .menu-dot {
@@ -91,14 +51,13 @@
   position: absolute;
   top: 50px;
   right: 10px;
-  background-color: #333;
-  border: 1px solid #555;
+  background-color: #BA68C8;
   padding: 10px;
   z-index: 1;
 }
 
 .menu-item {
-  background-color: #333;
+  background-color: #BA68C8;
   color: white;
   border: none;
   padding: 10px;
@@ -108,6 +67,25 @@
   cursor: pointer;
   font-size: 16px;
   transition: 0.3s;
+  border-radius: 0px;
+}
+
+.menu-item:hover{
+  background-color: #A05B9D !important;
+}
+
+.menu-item:focus{
+  background-color: #A05B9D;
+}
+
+.grama-name{
+  margin-left: 50px;
+}
+
+@media (min-width:601px) {
+  .mobile-menu{
+    display: none;
+  }
 }
 
 @media only screen and (max-width: 600px) {

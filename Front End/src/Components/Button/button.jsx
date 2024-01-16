@@ -7,7 +7,7 @@ import './button.css';
 const Button = ({ to, onClick, className, style, children }) => {
   const buttonProps = {
     className: `custom-button ${className || ''}`,
-    style: style || {}, // Apply the passed style or an empty object
+    style: style || {}, 
   };
 
   if (to) {

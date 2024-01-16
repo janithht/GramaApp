@@ -1,0 +1,10 @@
+.container {
+    height: 15vh;
+  }
+  
+  .main-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }

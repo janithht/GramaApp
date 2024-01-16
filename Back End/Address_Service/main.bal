@@ -29,12 +29,18 @@ type AddressMismatch record {
     ErrorDetails body;
 };
 
-mysql:Client Citizendb = check new ("localhost", "root", "admin321", "citizendb", 3306);
+configurable string HOST = ?;
+configurable string USER = ?;
+configurable string PASSWORD = ?;
+configurable string DATABASE = ?;
+configurable int PORT = ?;
 
-service /address\-check on new http:Listener(8080) {
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+
+service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error {
         
-        Citizen|sql:Error user = Citizendb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
 
         if user is sql:NoRowsError {  // User Not Found
             UserNotFound userNotFound= {

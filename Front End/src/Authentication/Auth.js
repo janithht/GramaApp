@@ -2,11 +2,10 @@ import React,{useEffect} from "react";
 import { useAuthContext  } from "@asgardeo/auth-react";
 import LandingPage from "../Pages/Landing/landing";
 import Dashboard from "../Pages/Dashboard/dashboard";
-import Button from "../Components/Button/button"
 
 function Auth() {
 
-  const { state, signOut, getDecodedIDToken   } = useAuthContext();
+  const { state, getDecodedIDToken } = useAuthContext();
   console.log(getDecodedIDToken );
 
   useEffect(() => {
@@ -15,14 +14,16 @@ function Auth() {
     }).catch((error) => {
         console.log(error); 
     })
-}, []);
+}, [getDecodedIDToken]);
 
   return (
     <div className="App">
       {
         state.isAuthenticated
           ? (
-            <Dashboard/>
+            <div>
+              <Dashboard/>
+            </div>
           )
           :(<>
           <LandingPage/>
