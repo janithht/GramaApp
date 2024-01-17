@@ -2,27 +2,27 @@ import ballerina/io;
 import ballerina/time;
 import ballerinax/slack;
 
-// configurable string token = ?; 
+configurable string token = ?; 
 
-// public function main() returns error? {
-//     // error? writeMessageResult = writeMessage("test 5");
-//     // if writeMessageResult is error {
-//     //     io:println("Error occurred while sending message");
-//     // }
-//     json[]|error? conversationHistory = getConversationHistory();
-//     if conversationHistory is json[] {
-//         foreach json conversation in conversationHistory {
-//             io:println(conversation);
-//         }
-//     } else if conversationHistory is error {
-//         io:println("Error occurred while getting conversation history");
-//     }
-// }
+public function main() returns error? {
+    error? writeMessageResult = writeMessage("test 7");
+    if writeMessageResult is error {
+        io:println("Error occurred while sending message");
+    }
+    json[]|error? conversationHistory = getConversationHistory();
+    if conversationHistory is json[] {
+        foreach json conversation in conversationHistory {
+            io:println(conversation);
+        }
+    } else if conversationHistory is error {
+        io:println("Error occurred while getting conversation history");
+    }
+}
 
 function writeMessage(string message) returns error? {
     slack:ConnectionConfig slackConfig = {
         auth: {
-            token: "xoxp-6448348554055-6465350645444-6485852607857-512109f1fb67a20c1451a57bc93e45a4"
+            token
         }
     };
     slack:Client slackClient = check new (slackConfig);
@@ -33,14 +33,19 @@ function writeMessage(string message) returns error? {
     };
 
     string messageResult = check slackClient->postMessage(messageParams);
-    io:println(messageResult);
+    io:println("messageResult:",messageResult);
+    // if (messageResult is string) {
+    //     return true;
+    // } else {
+    //     return false;
+    // }
 
 }
 
 function getConversationHistory() returns json[]|error? {
     slack:ConnectionConfig slackConfig = {
         auth: {
-            token: "xoxp-6448348554055-6465350645444-6485852607857-512109f1fb67a20c1451a57bc93e45a4"
+            token
         }
     };
     slack:Client slackClient = check new (slackConfig);
@@ -67,7 +72,7 @@ function getConversationHistory() returns json[]|error? {
 isolated function getUserInfoByUserId(string userId) returns string|error? {
     slack:ConnectionConfig slackConfig = {
         auth: {
-            token: "xoxp-6448348554055-6465350645444-6485852607857-512109f1fb67a20c1451a57bc93e45a4"
+            token
         }
     };
 
