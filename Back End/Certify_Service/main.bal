@@ -3,7 +3,6 @@ import ballerina/time;
 import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
 import ballerina/sql;
-import ballerina/url;
 import ballerina/io;
 
 
@@ -19,13 +18,6 @@ configurable string ADDRESS_SERVICE = ?;
 
 mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
 
-public type Address record{|
-    string no;
-    string street1;
-    string street2;
-    string city;
-    string postalcode;
-|};
 
 public type division_record record {|
     @sql:Column { name: "division_id" }
@@ -37,7 +29,11 @@ public type division_record record {|
 public type NewRequest record{|
     int division_id;
     readonly string NIC;
-    Address address;
+    string no;
+    string street1;
+    string street2;
+    string city;
+    string postalcode;
 |};
 
 public type Request record{|
@@ -65,15 +61,16 @@ final http:Client addressCheckClient = check new (ADDRESS_SERVICE);
 
 //Input parameters : NIC, Address
 function addCertificateRequest(NewRequest req) returns int|error {
-    // Encoding a URL component into a string.
-    string encodedAddress = check url:encode(req.address.toString(), "UTF-8");
+    
     //returns the exist_id if there's a user
     int exist_Id = check identityClient->get("/users?NIC="+req.NIC);
     // get police_check value from police check service
     int police_check = check policeCheckClient->get("/checkCriminal/?NIC="+req.NIC);
     
-    // get address_check value from address check service
-    int address_check = check addressCheckClient->get(string `/address?addressId=${exist_Id}&userAddress=${encodedAddress}`);
+    
+
+    int address_check = check addressCheckClient->post("/address",req
+    );
 
     // intial request status (processing=0, approved=1, rejected=2)
     int request_status=0;
@@ -111,7 +108,7 @@ function updateStatus(int id, int policeCheck, int identityCheck, int addressChe
     sql:ExecutionResult result = check certifyDb->execute(`
         UPDATE certificaterequest
         SET status = ${status}
-        WHERE request_id = ${id}`);
+        WHERE req_id = ${id}`);
     
     int|string? affectedRowCount = result.affectedRowCount;
 
