@@ -39,12 +39,12 @@ configurable string PASSWORD = ?;
 configurable string DATABASE = ?;
 configurable int PORT = ?;
 
-mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 5});
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
 
 service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns int {
         
-        Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.NIC}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select * from users where NIC = ${citizen.NIC}`);
 
         if user is sql:NoRowsError {  // User Not Found
            
