@@ -3,6 +3,8 @@ import ballerina/sql;
 import ballerinax/mysql;
 import ballerina/time;
 import ballerinax/mysql.driver as _;
+import ballerina/log;
+
 
 public type Citizen record{|
     int division_id;
@@ -47,23 +49,22 @@ service /addressCheck on new http:Listener(9092) {
         Citizen|sql:Error user = nationalDb->queryRow(`Select * from users where NIC = ${citizen.NIC}`);
 
         if user is sql:NoRowsError {  // User Not Found
-           
+            log:printError("User Not Found");
             return 1;
 
         }else if user is sql:Error { //Other SQL Errors
+            log:printError("SQL error: " + user.message());
             return 1;
 
-        }else if user is Citizen {
+        }else if user is Citizen{
             if (isEqual(citizen.address.no,user.address.no) && isEqual(citizen.address.street1,user.address.street1) && isEqual(citizen.address.street2,user.address.street2) && isEqual(citizen.address.city,user.address.city) ) {
-                
-                return 0;
+            return 0;
 
-            } else {
-                
-                return 1;
-            }
+        } else {
+            log:printError("Error");
+            return 1;
+        } 
         }
-        
     }
 
     
