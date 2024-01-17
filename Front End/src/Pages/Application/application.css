@@ -1,10 +1,37 @@
-.container {
-    height: 15vh;
-  }
-  
+.main-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  margin: 0px 20px;
+}
+
+.form-container {
+  width: 60%; /* Adjust as needed */
+  padding: 100px;
+}
+
+/* Image container styles */
+.image-container {
+  width: 40%; /* Adjust as needed */
+}
+
+.side-image {
+  width: 100%; /* Ensure the image takes up the full width of its container */
+  height: auto; /* Maintain aspect ratio */
+  border-radius: 4px; /* Optional: Add border-radius to the image */
+}
+
+/* Add additional styling for responsiveness if necessary */
+@media (max-width: 768px) {
   .main-container {
-    display: flex;
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
   }
+
+  .form-container,
+  .image-container {
+    width: 100%;
+    margin-bottom: 20px;
+  }
+}
