@@ -5,7 +5,7 @@ import './submission.css';
 const Submission = () => {
   return (
     <div className="submission-container">
-      <div className="header"> */}
+      <div className="header"> 
        {/* <img src={ImagePlaceholder} alt="Form Logo" className="logo" /> */}
         <h2>Submission Form</h2>
       </div>

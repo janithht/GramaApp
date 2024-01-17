@@ -10,14 +10,14 @@ const MenuBar = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
   };
 
-  const { signOut} = useAuthContext() || {};
+  const { signOut} = useAuthContext();
 
   return (
     <div className="menu-bar">
       <p className='grama-name'>Grama Check</p>
       <div className="nav-menu">
         <Button className='menu-btn'>Main Menu</Button>
-        <Button className='menu-btn' onClick={() => signOut()}>Logout</Button>
+        <button className='menu-btn' onClick={() => signOut()}>Logout</button>
       </div>
       <div className="menu-icon" onClick={toggleMobileMenu}>
         <span className="menu-dot"></span>
@@ -27,7 +27,7 @@ const MenuBar = () => {
       {isMobileMenuOpen && (
         <div className="mobile-menu">
           <button className="menu-item">Main Menu</button>
-          <button className="menu-item">Logout</button>
+          <button className="menu-item" onClick={()=>signOut()}>Logout</button>
         </div>
       )}
     </div>
