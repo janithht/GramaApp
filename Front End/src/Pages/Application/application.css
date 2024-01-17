@@ -1,37 +1,98 @@
-.main-container {
+.container{
+  height: 15vh;
+}
+
+.main-form-container {
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
   height: 80vh;
-  margin: 0px 20px;
 }
 
 .form-container {
-  width: 60%; /* Adjust as needed */
+  width: 60%;
   padding: 100px;
 }
 
-/* Image container styles */
+.application-form {
+  padding: 0px;
+}
+
+.heading-3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px 50px;
+  align-items: center;
+}
+
+.text {
+  text-align: center;
+}
+
 .image-container {
-  width: 40%; /* Adjust as needed */
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .side-image {
-  width: 100%; /* Ensure the image takes up the full width of its container */
-  height: auto; /* Maintain aspect ratio */
-  border-radius: 4px; /* Optional: Add border-radius to the image */
+  width: 80%;
+  height: auto;
+  border-radius: 4px;
+  justify-content: center;
 }
 
-/* Add additional styling for responsiveness if necessary */
-@media (max-width: 768px) {
-  .main-container {
+.select-input {
+  width: 99%;
+}
+
+.submit-button{
+  width: 100%;
+}
+
+@media (max-width: 1000px) {
+  .main-form-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .side-image {
+    display: none; 
+  }
+
+  .form-container {
+    width: 80%;
+    padding: 0px;
+    text-align: center; 
+  }
+
+  .heading-3{
+    padding: 1px;
+  }
+
+  .text{
+    font-size: smaller;  }
+
+  .image-container {
+    padding-top: 100px;
+    width: 80%;
+    /* display: flex; */
+    /* justify-content: center; */
+    /* flex-direction: column; */
+    align-items: center;
+  }
+  
+
+  .application-form {
+    display: flex;
     flex-direction: column;
   }
 
-  .form-container,
-  .image-container {
-    width: 100%;
-    margin-bottom: 20px;
+  .select-input{
+    width: 95%;
   }
 }

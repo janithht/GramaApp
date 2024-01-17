@@ -26,7 +26,7 @@ function Auth() {
             </>
           )
           :(<div>
-            <Landing/>
+            {/* <Landing/> */}
           </div>)
       }
     </div>

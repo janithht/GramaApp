@@ -1,22 +1,3 @@
-/* .custom-button {
-    padding: 10px;
-    background-color:#BA68C8;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-size: 16px;
-    text-decoration: none;
-    display: inline-block;
-    transition: background-color 0.3s;
-    margin-right: 10px;
-  }
-  
-  .custom-button:hover {
-    background-color: red;
-  }
-   */
-
 .custom-button {
   width: fit-content;
   background-color: #BA68C8; 
@@ -31,6 +12,7 @@
   align-items: center;
   text-decoration: none; 
   color: #fff; 
+  justify-content: center;
 }
 
 .custom-button:hover {

@@ -5,7 +5,7 @@ import ballerinax/mysql.driver as _;
 import ballerina/log;
 
 public type Citizen record{|
-    string divisionId;
+    int division_id;
     readonly string NIC;
     string no;
     string street1;
@@ -25,7 +25,7 @@ mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, dat
 service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns int {
         
-        Citizen|sql:Error user = nationalDb->queryRow(`Select NIC,no,street1,street2,city,postalcode from users where NIC = ${citizen.NIC}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select division_id,NIC,no,street1,street2,city,postalcode from users where NIC = ${citizen.NIC}`);
 
         if user is sql:NoRowsError {  // User Not Found
             log:printError("User Not Found"+user.message());

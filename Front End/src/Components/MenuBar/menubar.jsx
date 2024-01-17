@@ -3,6 +3,7 @@ import './menubar.css';
 import Button from "../Button/button"
 import { useAuthContext } from '@asgardeo/auth-react';
 
+
 const MenuBar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
 
