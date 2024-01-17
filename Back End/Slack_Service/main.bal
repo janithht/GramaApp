@@ -5,9 +5,10 @@ import ballerinax/slack;
 configurable string token = ?; 
 
 // public function main() returns error? {
-//     error? writeMessageResult = writeMessage("test 7");
+//     boolean | error? writeMessageResult = writeMessage("test 8");
+
 //     if writeMessageResult is error {
-//         io:println("Error occurred while sending message");
+//         io:println(writeMessageResult);
 //     }
 //     json[]|error? conversationHistory = getConversationHistory();
 //     if conversationHistory is json[] {
@@ -19,7 +20,7 @@ configurable string token = ?;
 //     }
 // }
 
-function writeMessage(string message) returns error? {
+function writeMessage(string message) returns boolean | error? {
     slack:ConnectionConfig slackConfig = {
         auth: {
             token
@@ -32,14 +33,13 @@ function writeMessage(string message) returns error? {
         text: message
     };
 
-    string messageResult = check slackClient->postMessage(messageParams);
-    io:println("messageResult:",messageResult);
-    // if (messageResult is string) {
-    //     return true;
-    // } else {
-    //     return false;
-    // }
-
+    string | error messageResult = check slackClient->postMessage(messageParams);
+    io:println("messageResult:",typeof messageResult);
+    if(messageResult is error){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 function getConversationHistory() returns json[]|error? {
