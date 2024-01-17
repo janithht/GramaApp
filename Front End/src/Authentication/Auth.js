@@ -1,11 +1,48 @@
+// import React,{useEffect} from "react";
+// import { useAuthContext  } from "@asgardeo/auth-react";
+// import Landing from "../Pages/Landing/landing";
+// import Dashboard from "../Pages/Dashboard/dashboard";
+
+// function Auth() {
+
+//   const { state, getDecodedIDToken} = useAuthContext();
+//   console.log(getDecodedIDToken );
+
+//   useEffect(() => {
+//     getDecodedIDToken().then((idToken) => {
+//         console.log(idToken.tenant_domain);
+//     }).catch((error) => {
+//         console.log(error); 
+//     })
+// }, [getDecodedIDToken]);
+
+//   return (
+//     <div className="App">
+//       {
+//         state.isAuthenticated
+//           ? (
+//             <>
+//               <Dashboard/>
+//             </>
+//           )
+//           :(<div>
+//             <Landing/>
+//           </div>)
+//       }
+//     </div>
+//   );
+// }
+
+// export default Auth;
+
 import React,{useEffect} from "react";
 import { useAuthContext  } from "@asgardeo/auth-react";
-import LandingPage from "../Pages/Landing/landing";
+import LandingPage from "../Pages/LandingPage/LandingPage";
 import Dashboard from "../Pages/Dashboard/dashboard";
 
 function Auth() {
 
-  const { state, getDecodedIDToken } = useAuthContext();
+  const { state, signOut, getDecodedIDToken   } = useAuthContext();
   console.log(getDecodedIDToken );
 
   useEffect(() => {
@@ -14,7 +51,7 @@ function Auth() {
     }).catch((error) => {
         console.log(error); 
     })
-}, [getDecodedIDToken]);
+}, []);
 
   return (
     <div className="App">
@@ -22,11 +59,16 @@ function Auth() {
         state.isAuthenticated
           ? (
             <div>
-              <Dashboard/>
+              <ul>
+                <li>{state.username}</li>
+                <li></li>
+              </ul>
+
+              <button onClick={() => signOut()}>Logout</button>
             </div>
           )
           :(<>
-          <LandingPage/>
+          <LandingPage></LandingPage>
           </>)
       }
     </div>
