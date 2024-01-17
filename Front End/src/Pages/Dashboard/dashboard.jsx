@@ -19,7 +19,11 @@ const navigate = useNavigate();
         </div>
         <div className="main-container"> 
             <div className="menu-container">
+<<<<<<< HEAD
                 <Tile text="Apply for Certificate" image={applyCertificate} onClick={()=>navigate("/application")}/>
+=======
+                <Tile text="Apply for Certificate" image={applyCertificate} onClick={()=> navigate("/application")}/>
+>>>>>>> adb94d9bff6928078568d25942777f406e5b75dc
                 <Tile text="Check the Status" image={statusCheck}  />
                 <Tile text="Ask for Help" image={help}  />
             </div>
