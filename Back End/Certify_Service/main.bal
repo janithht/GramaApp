@@ -17,7 +17,7 @@ configurable string IDENTITY_SERVICE = ?;
 configurable string ADDRESS_SERVICE = ?;
 
 
-mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
 
 public type Address record{|
     string no;
@@ -52,26 +52,6 @@ public type Request record{|
 |};
 
 
-type CriminalRecord record {|
-  int convictionID; 
-  string offendersNIC;
-  string offenderName;
-  string offenseType;
-  time:Date convictionDate;
-  string sentencingCourt;
-  string penalty;
-  boolean isConvicted;
-  int severityLevel;
-
-|};
-
-type CriminalRecordResponse record {|
-    int isCriminalRecords;
-    CriminalRecord [] userCriminalRecords;
-|};
-
-
-
 // police check service
 final http:Client policeCheckClient = check new (POLICE_CHECK_SERVICE);
 
@@ -87,20 +67,13 @@ final http:Client addressCheckClient = check new (ADDRESS_SERVICE);
 function addCertificateRequest(NewRequest req) returns int|error {
     // Encoding a URL component into a string.
     string encodedAddress = check url:encode(req.address.toString(), "UTF-8");
-
-    // get police_check value from police check service
-    CriminalRecordResponse police_check = check policeCheckClient->get("/policeCheck/checkCriminalRecords/?Id="+req.NIC);
-    int  isCR = police_check.isCriminalRecords;    
-    //  1--> have criminal records
-    //  0-->no criminal records
-
-
     //returns the exist_id if there's a user
-    int exist_Id = check identityClient->get("/identityCheck/users?id="+req.NIC);
-
-
+    int exist_Id = check identityClient->get("/users?NIC="+req.NIC);
+    // get police_check value from police check service
+    int police_check = check policeCheckClient->get("/checkCriminal/?NIC="+req.NIC);
+    
     // get address_check value from address check service
-    int address_check = check addressCheckClient->get(string `/addressCheck/check_user_address_and_division?addressId=${exist_Id}&userAddress=${encodedAddress}`);
+    int address_check = check addressCheckClient->get(string `/address?addressId=${exist_Id}&userAddress=${encodedAddress}`);
 
     // intial request status (processing=0, approved=1, rejected=2)
     int request_status=0;
@@ -118,11 +91,11 @@ function addCertificateRequest(NewRequest req) returns int|error {
     // insert certificate request to database with police_check value
     sql:ExecutionResult result = check certifyDb->execute(`
         INSERT INTO certificaterequest (division_id,NIC, id_check, address_check, police_check, status,date_submitted)
-        VALUES (${req.division_id},${req.NIC}, ${exist_Id}, ${address_check}, ${isCR}, ${request_status},${date})`);
+        VALUES (${req.division_id},${req.NIC}, ${exist_Id}, ${address_check}, ${police_check}, ${request_status},${date})`);
     int|string? lastInsertId = result.lastInsertId;
     if lastInsertId is int {
         //update Status
-        int _ = check updateStatus(lastInsertId, isCR, exist_Id, address_check);
+        int _ = check updateStatus(lastInsertId, police_check, exist_Id, address_check);
         return lastInsertId;
     } 
     else {

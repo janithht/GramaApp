@@ -1,6 +1,14 @@
 import ballerina/http;
 import ballerinax/mysql.driver as _;
 
+@http:ServiceConfig {
+    cors: {
+        allowOrigins: ["http://localhost:3000"], // add front end host url here
+        allowCredentials: true,
+        maxAge: 84900
+    }
+}
+
 service /gramaCertificate on new http:Listener(9093) {
     //get all certificate requests
     resource function get allCertRequests() returns Request[]|error {

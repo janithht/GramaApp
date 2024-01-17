@@ -33,7 +33,7 @@ type UserNotFound record{|
     ErrorDetails body;
 |};
 
-mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
 
 service /identityCheck on new http:Listener(9090) {
 

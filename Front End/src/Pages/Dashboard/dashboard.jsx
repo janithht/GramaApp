@@ -6,11 +6,11 @@ import statusCheck from "../../Assets/Status.png";
 import help from "../../Assets/Help.png";
 import './dashboard.css';
 import Tile from "../../Components/Tile/tile.jsx"
-import { useNavigate } from 'react-router-dom';
+// import { useNavigate } from 'react-router-dom';
 
 const Dashboard = () => {
 
-const navigate = useNavigate();
+// const navigate = useNavigate();
 
   return (
     <div>
@@ -20,7 +20,7 @@ const navigate = useNavigate();
         <div className="main-container"> 
             <p className='welcome-heading'>Welcome to Grama Check!</p>
             <div className="menu-container">
-                <Tile text="Apply for Certificate" image={applyCertificate} onClick={() => navigate('/application')}  />
+                <Tile text="Apply for Certificate" image={applyCertificate} />
                 <Tile text="Check the Status" image={statusCheck}  />
                 <Tile text="Ask for Help" image={help}  />
             </div>

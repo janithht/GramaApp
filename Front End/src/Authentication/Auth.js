@@ -1,5 +1,10 @@
+<<<<<<< HEAD
 import React, { useEffect } from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
+=======
+import React,{useEffect} from "react";
+import { useAuthContext  } from "@asgardeo/auth-react";
+>>>>>>> fb1f4183a2a65f6b2861c31029c13fdd10701e40
 import Landing from "../Pages/Landing/landing";
 import Dashboard from "../Pages/Dashboard/dashboard";
 
