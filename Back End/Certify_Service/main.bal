@@ -17,7 +17,7 @@ configurable string IDENTITY_SERVICE = ?;
 configurable string ADDRESS_SERVICE = ?;
 
 
-mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 5});
 
 public type Address record{|
     string no;

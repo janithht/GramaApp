@@ -38,7 +38,7 @@ function App() {
   console.log(process.env.REACT_APP_CLIENT_ID);
   return (
     <div>
-      <RouterProvider router={router}>
+      
     <AuthProvider
       config={ {
           signInRedirectURL: "http://localhost:3000",
@@ -51,6 +51,7 @@ function App() {
     <Auth/>
     
     </AuthProvider>
+    <RouterProvider router={router}>
     </RouterProvider>
     </div>
   );

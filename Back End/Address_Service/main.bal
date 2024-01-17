@@ -4,14 +4,18 @@ import ballerinax/mysql;
 import ballerina/time;
 import ballerinax/mysql.driver as _;
 
-type Citizen record {|
-    string nic;
-    string citizenName;
-    string addressNumber;
+public type Citizen record{|
+    int division_id;
+    readonly string NIC;
+    Address address;
+|};
+
+public type Address record{|
+    string no;
     string street1;
     string street2;
     string city;
-    string postalCode;
+    string postalcode;
 |};
 
 type ErrorDetails record {
@@ -35,32 +39,27 @@ configurable string PASSWORD = ?;
 configurable string DATABASE = ?;
 configurable int PORT = ?;
 
-mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 5});
 
 service /addressCheck on new http:Listener(9092) {
-    resource function post address(Citizen citizen) returns Citizen|AddressMismatch|UserNotFound|sql:Error |int {
+    resource function post address(Citizen citizen) returns int {
         
-        Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.nic}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select * from citizenData where NIC = ${citizen.NIC}`);
 
         if user is sql:NoRowsError {  // User Not Found
-            UserNotFound userNotFound= {
-                body: {message: string `user not found`, details: string `USER ${citizen.nic}`, timeStamp: time:utcNow()}
-            };
-
+           
             return 1;
 
         }else if user is sql:Error { //Other SQL Errors
             return 1;
 
         }else if user is Citizen {
-            if (isEqual(citizen.addressNumber,user.addressNumber) && isEqual(citizen.street1,user.street1) && isEqual(citizen.street2,user.street2) && isEqual(citizen.city,user.city) ) {
+            if (isEqual(citizen.address.no,user.address.no) && isEqual(citizen.address.street1,user.address.street1) && isEqual(citizen.address.street2,user.address.street2) && isEqual(citizen.address.city,user.address.city) ) {
                 
                 return 0;
 
             } else {
-                AddressMismatch addressMismatch = {
-                    body: {message: string `Address Mismatch`, details: string `USER ${citizen.nic}`, timeStamp: time:utcNow()}
-                };
+                
                 return 1;
             }
         }

@@ -11,7 +11,7 @@ configurable int PORT = ?;
 configurable string DATABASE = ?;
 
 final mysql:Client policeDb = check new(
-host=HOST, user=USER, password=PASSWORD, port=PORT, database=DATABASE
+host=HOST, user=USER, password=PASSWORD, port=PORT, database=DATABASE,connectionPool ={maxOpenConnections: 5}
 );
 
 
@@ -51,7 +51,7 @@ CriminalRecord [] criminalRecords = [];
         do {
             criminalRecords.push(userCriminalRecord);
         };
-    check resultStream.close();
+    
     
     CriminalRecordResponse criminalRecordResponse;
 
