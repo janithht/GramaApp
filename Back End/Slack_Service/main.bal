@@ -4,21 +4,21 @@ import ballerinax/slack;
 
 configurable string token = ?; 
 
-// public function main() returns error? {
-//     boolean | error? writeMessageResult = writeMessage("test 8");
+public function main() returns error? {
+    boolean | error? writeMessageResult = writeMessage("test 8");
 
-//     if writeMessageResult is error {
-//         io:println(writeMessageResult);
-//     }
-//     json[]|error? conversationHistory = getConversationHistory();
-//     if conversationHistory is json[] {
-//         foreach json conversation in conversationHistory {
-//             io:println(conversation);
-//         }
-//     } else if conversationHistory is error {
-//         io:println("Error occurred while getting conversation history");
-//     }
-// }
+    if writeMessageResult is error {
+        io:println(writeMessageResult);
+    }
+    json[]|error? conversationHistory = getConversationHistory();
+    if conversationHistory is json[] {
+        foreach json conversation in conversationHistory {
+            io:println(conversation);
+        }
+    } else if conversationHistory is error {
+        io:println("Error occurred while getting conversation history");
+    }
+}
 
 function writeMessage(string message) returns boolean | error? {
     slack:ConnectionConfig slackConfig = {

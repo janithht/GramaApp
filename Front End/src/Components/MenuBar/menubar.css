@@ -82,6 +82,17 @@
   margin-left: 50px;
 }
 
+.support-icon{
+  margin: 11px 25px 0px 2px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.support-icon:hover{
+  background-color: #A05B9D;
+  border-radius: 5px;
+}
+
 @media (min-width:601px) {
   .mobile-menu{
     display: none;
@@ -99,6 +110,9 @@
 
   .nav-menu{
     display: none;
+  }
+  .support-icon{
+    margin: 13px 0px 0px 2px;
   }
 }
 
