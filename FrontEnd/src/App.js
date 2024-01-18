@@ -17,6 +17,7 @@ function App() {
           <Route path="/application" element={<Application />} />
           <Route path="/grama-dashboard" element={<GramaDashboard />} />
           <Route path="/slack-support" element={<SlackSupport/>}></Route>
+          
         </Routes>
       </Router>
     </div>
