@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './menubar.css'; 
 import Button from "../Button/button"
 import { useAuthContext } from '@asgardeo/auth-react';
