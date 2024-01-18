@@ -1,17 +1,17 @@
-.main-container {
+.main-container2 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    width: 500px; /* Adjust as needed */
-    height: 600px; /* Adjust as needed */
-    border: 2px solid #007bff;
-    border-radius: 15px;
+    width: 1800px; /* Adjust as needed */
+
+    /* border: 2px solid #007bff; */
+    /* border-radius: 15px; */
     background-color: #ffffff;
     margin: 20px auto; /* Auto margin for centering horizontally */
   }
   
-  .menu-container {
+  /* .menu-container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -39,10 +39,10 @@
     cursor: pointer;
     transition: background-color 0.3s, border-color 0.3s;
     margin-bottom: 15px;
-    width: 200px; /* Adjust as needed */
-  }
+    width: 200px; 
+  } */
   
-  .menu-button:hover {
+  /* .menu-button:hover {
     background-color: #007bff;
     color: #ffffff;
     border-color: #ffffff;
@@ -55,5 +55,5 @@
   
   .text {
     font-size: 1.5em;
-  }
+  } */
   

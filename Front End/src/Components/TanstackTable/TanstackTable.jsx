@@ -7,6 +7,11 @@ import './TanstackTable.css'
 import Swal from 'sweetalert2'
 
 
+// const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
+
+const ExpandedComponent = ({ data }) => <pre><h1>abcd</h1></pre>;
+
+
 const handleClickNotify = ()=>{
     const Toast = Swal.mixin({
         toast: true,
@@ -90,7 +95,7 @@ const columns = [
         cell: row => (
             row.id > 5
                 ? <button className="table-button" onClick={()=> handleClickNotify()} >notify</button>
-                : <button className="table-button" onClick={()=> handleClickMore()} >more</button>
+                : <></>
         ),
 	},
 ];
@@ -133,11 +138,11 @@ const TanstackTable =() =>{
         <DataTable 
             data={filteredData} 
             columns={columns} 
-            selectableRows={true} 
             progressPending={isLoading} 
             progressComponent={<CircleLoader color="#36d7b7" />}
             pagination={true}
-            
+            expandableRows expandableRowDisabled={row => row.disabled} 
+            expandableRowsComponent={ExpandedComponent}
         />
         </>
     );
