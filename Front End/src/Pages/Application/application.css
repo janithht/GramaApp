@@ -7,12 +7,12 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 80vh;
+  height: 70vh;
 }
 
 .form-container {
   width: 60%;
-  padding: 100px;
+  padding: 0px 100px;
 }
 
 .application-form {
@@ -37,6 +37,7 @@
   justify-content: center;
   flex-direction: column;
   align-items: center;
+  margin-top: 55px 
 }
 
 .side-image {
@@ -51,7 +52,7 @@
 }
 
 .submit-button{
-  width: 100%;
+  width: 99%;
 }
 
 @media (max-width: 1000px) {
@@ -80,10 +81,11 @@
   .image-container {
     padding-top: 100px;
     width: 80%;
-    /* display: flex; */
-    /* justify-content: center; */
-    /* flex-direction: column; */
     align-items: center;
+  }
+
+  .submit-button{
+    width: 96%;
   }
   
 

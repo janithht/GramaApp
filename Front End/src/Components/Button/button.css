@@ -31,8 +31,8 @@
 /* Media Query for Mobile Responsive */
 @media (max-width: 1000px) {
   .custom-button {
-    max-width: calc(50% - 50px);
-    width: 100%;
+    /* max-width: calc(50% - 50px); */
+    /* width: 100%; */
     height: auto; 
     box-sizing: border-box;
   }
