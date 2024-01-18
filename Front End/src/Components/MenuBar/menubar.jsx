@@ -6,6 +6,14 @@ import { useNavigate } from 'react-router-dom';
 
 const MenuBar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const { getBasicUserInfo } = useAuthContext();
+  const [user, setUser] = useState();
+
+  useEffect(() => {
+    getBasicUserInfo()?.then((user) => {
+      setUser(user);
+    });
+  }, [getBasicUserInfo]);
 
   const toggleMobileMenu = () => {
     setMobileMenuOpen(!isMobileMenuOpen);
@@ -18,7 +26,7 @@ const MenuBar = () => {
 
   return (
     <div className="menu-bar">
-      <p className='grama-name'>Grama Check</p>
+      <p className="grama-name">Grama Check</p>
       <div className="nav-menu">
         <Button className='menu-btn' onClick={()=> navigate("/dashboard")}>Main Menu</Button>
         <button className='menu-btn' onClick={() => signOut()}>Logout</button>

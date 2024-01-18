@@ -4,22 +4,23 @@ import ballerinax/slack;
 
 configurable string token = ?; 
 
-// public function main() returns error? {
-//     error? writeMessageResult = writeMessage("test 7");
-//     if writeMessageResult is error {
-//         io:println("Error occurred while sending message");
-//     }
-//     json[]|error? conversationHistory = getConversationHistory();
-//     if conversationHistory is json[] {
-//         foreach json conversation in conversationHistory {
-//             io:println(conversation);
-//         }
-//     } else if conversationHistory is error {
-//         io:println("Error occurred while getting conversation history");
-//     }
-// }
+public function main(string message) returns error? {
+    boolean | error? writeMessageResult = writeMessage(message);
 
-function writeMessage(string message) returns error? {
+    if writeMessageResult is error {
+        io:println(writeMessageResult);
+    }
+    json[]|error? conversationHistory = getConversationHistory();
+    if conversationHistory is json[] {
+        foreach json conversation in conversationHistory {
+            io:println(conversation);
+        }
+    } else if conversationHistory is error {
+        io:println("Error occurred while getting conversation history");
+    }
+}
+
+function writeMessage(string message) returns boolean | error? {
     slack:ConnectionConfig slackConfig = {
         auth: {
             token
@@ -32,14 +33,13 @@ function writeMessage(string message) returns error? {
         text: message
     };
 
-    string messageResult = check slackClient->postMessage(messageParams);
-    io:println("messageResult:",messageResult);
-    // if (messageResult is string) {
-    //     return true;
-    // } else {
-    //     return false;
-    // }
-
+    string | error messageResult = check slackClient->postMessage(messageParams);
+    io:println("messageResult:",typeof messageResult);
+    if(messageResult is error){
+        return false;
+    }else{
+        return true;
+    }
 }
 
 function getConversationHistory() returns json[]|error? {
