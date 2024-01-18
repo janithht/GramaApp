@@ -12,7 +12,7 @@ RUN rm /etc/nginx/conf.d/default.conf
 
 COPY conf/nginx.conf /etc/nginx/conf.d/
 
-COPY --from=build-stage /FrontEnd/dist /usr/share/nginx/html
+COPY --from=build-stage /FrontEnd/build /usr/share/nginx/html
 USER 10014
 EXPOSE 8080 
 
