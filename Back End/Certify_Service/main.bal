@@ -3,24 +3,32 @@ import ballerina/time;
 import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
 import ballerina/sql;
+import ballerina/io;
+
 
 configurable string HOST = ?;
 configurable string USER = ?;
 configurable string PASSWORD = ?;
 configurable string DATABASE = ?;
 configurable int PORT = ?;
+configurable string POLICE_CHECK_SERVICE = ?;
+configurable string IDENTITY_SERVICE = ?;
+configurable string ADDRESS_SERVICE = ?;
 
 
-mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT);
+mysql:Client certifyDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
 
-type Request record{|
-    readonly int req_id;
-    readonly int NIC;
-    string address;
-    string status;
+
+public type division_record record {|
+    @sql:Column { name: "division_id" }
+    int division_id;
+    @sql:Column { name: "division" }
+    string division;
 |};
 
-public type Address record{|
+public type NewRequest record{|
+    int division_id;
+    readonly string NIC;
     string no;
     string street1;
     string street2;
@@ -28,83 +36,92 @@ public type Address record{|
     string postalcode;
 |};
 
-
-type NewRequest record{|
-    int NIC;
-    Address address;
+public type Request record{|
+    readonly int req_id;
+    readonly int division_id;
+    readonly string NIC;
+    readonly int Id_check;
+    readonly int address_check;
+    readonly int police_check;
+    readonly int status;
+    readonly string date_submitted;
 |};
 
-type UpdateStatus record{|
-    string status;
-|};
 
-type ErrorDetails record{
-    string message;
-    string details;
-    time:Utc timeStamp;
-};
+// police check service
+final http:Client policeCheckClient = check new (POLICE_CHECK_SERVICE);
 
-type RequestNotFound record{|
-    *http:NotFound;
-    ErrorDetails body;
-|};
-
-service /certificateRequest on new http:Listener(9091) {
-
-    //Submit Certificate Request
-    resource function post requests(NewRequest newRequest) returns http:Created|error {
-
-        string addressString = newRequest.address.toString();
-       _ = check certifyDb->execute(`
-       INSERT INTO certificaterequest(nic, address, status)
-       VALUES (${newRequest.NIC}, ${addressString}, 'Pending');`);
-       return http:CREATED;
-    }
+// Id check service
+final http:Client identityClient = check new (IDENTITY_SERVICE);
 
 
-    //List Certificate Requests
-    resource function get requests() returns Request[]|error {
-        stream<Request, sql:Error?> reqStream = certifyDb->query(`SELECT * FROM certificaterequest`);
-        return from var request in reqStream select request;
-    }
+// address check service
+final http:Client addressCheckClient = check new (ADDRESS_SERVICE);
 
-    //Get Certificate Request by NIC
-    resource function get requests/[int NIC]() returns Request|RequestNotFound|error {
-        Request|sql:Error request = certifyDb->queryRow(`SELECT * FROM certificaterequest WHERE NIC = ${NIC}`);  
-        if request is sql:NoRowsError {
-            RequestNotFound reqNotFound = {
-                body: {message: string `id: ${NIC}`, details: string `user/${NIC}`, timeStamp: time:utcNow()}
-            };
-            return reqNotFound;
-        }
-        return request;
-    }
 
-    //Update Certificate Request Status
-    resource function put requests/[int NIC](UpdateStatus updateStatus) returns Request|RequestNotFound|error {
-        // Check if the certificate request with the given NIC exists
-        Request|sql:Error request = certifyDb->queryRow(`SELECT * FROM certificaterequest WHERE NIC = ${NIC}`);
-        if request is sql:NoRowsError {
-            RequestNotFound reqNotFound = {
-                body: {message: string `Certificate request not found with NIC: ${NIC}`, details: "", timeStamp: time:utcNow()}
-            };
-            return reqNotFound;
-        }
+//Input parameters : NIC, Address
+function addCertificateRequest(NewRequest req) returns int|error {
+    
+    //returns the exist_id if there's a user
+    int exist_Id = check identityClient->get("/users?NIC="+req.NIC);
+    // get police_check value from police check service
+    int police_check = check policeCheckClient->get("/checkCriminal/?NIC="+req.NIC);
+    
+    
 
-        // Update the status of the certificate request
-        sql:ExecutionResult result = check certifyDb->execute(`
-        UPDATE certificaterequest
-        SET status = ${updateStatus.status}
-        WHERE nic = ${NIC};
-        `);
+    int address_check = check addressCheckClient->post("/address",req
+    );
 
-        // Return the updated request
-        if (result.affectedRowCount > 0) {
-            return request;
-        } else {
-            // Handle the case where no rows were updated (unlikely but possible)
-            return error("Request update failed: no rows affected");
-        }
+    // intial request status (processing=0, approved=1, rejected=2)
+    int request_status=0;
+    
+    //req time
+    time:Utc currTime = time:utcNow();
+    string dateUtc = time:utcToString(currTime);
+   
+    string date = dateUtc.substring(0, 10);
+    io:println(date);
+    io:println("Date: ", date);
+    
+
+
+    // insert certificate request to database with police_check value
+    sql:ExecutionResult result = check certifyDb->execute(`
+        INSERT INTO certificaterequest (division_id,NIC, id_check, address_check, police_check, status,date_submitted)
+        VALUES (${req.division_id},${req.NIC}, ${exist_Id}, ${address_check}, ${police_check}, ${request_status},${date})`);
+    int|string? lastInsertId = result.lastInsertId;
+    if lastInsertId is int {
+        //update Status
+        int _ = check updateStatus(lastInsertId, police_check, exist_Id, address_check);
+        return lastInsertId;
+    } 
+    else {
+        return error("Unable to obtain last insert ID");
     }
 
 }
+
+
+function updateStatus(int id, int policeCheck, int identityCheck, int addressCheck) returns int|error {
+    int status = (policeCheck == 0 && identityCheck == 0 && addressCheck == 0) ? 1 : 2;  // 1=approved, 2=rejected
+
+    sql:ExecutionResult result = check certifyDb->execute(`
+        UPDATE certificaterequest
+        SET status = ${status}
+        WHERE req_id = ${id}`);
+    
+    int|string? affectedRowCount = result.affectedRowCount;
+
+    if affectedRowCount is int {
+        return affectedRowCount;
+    } else {
+        return error("Unable to obtain affected row count");
+    }
+}
+
+
+
+
+
+
+

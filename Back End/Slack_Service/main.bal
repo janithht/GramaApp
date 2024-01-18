@@ -1,29 +1,16 @@
-// import ballerina/http;
-import ballerina/io;
-import ballerinax/slack;
+import ballerina/http;
 
-configurable string token = ?;
-
-// service /slackService on new http:Listener(9090) {
-// resource function post postMessagesToSlack(string username, string email, string message) returns error? {
-public function main(string message) returns error? {
-
-    slack:ConnectionConfig slackConfig = {
-        auth: {
-            token
-        }
-    };
-
-    slack:Client slackClient = check new (slackConfig);
-
-    slack:Message messageParams = {
-        channelName: "grama_",
-        // text: "Hello"
-        text: message
-    };
-
-    string stringResult = check slackClient->postMessage(messageParams);
-    io:println(stringResult);
+service /slackService on new http:Listener(9094) {
+   resource function post sendMessage(string message) returns boolean | error? {
+       boolean|error? writeMessageResult = writeMessage(message);
+       if writeMessageResult is boolean {
+            return writeMessageResult;
+       } else{
+            return writeMessageResult;
+       }
+   }
+   resource function get getMessages() returns json[] | error? {
+       json[]|error? readMessagesResult = getConversationHistory();
+        return readMessagesResult;
+   }
 }
-// }
-// }

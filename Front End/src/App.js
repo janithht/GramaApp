@@ -1,21 +1,25 @@
 import React from "react";
-import { AuthProvider } from "@asgardeo/auth-react";
-
-import Auth from "./Authentication/Auth";
+import Landing from "./Pages/Landing/landing.jsx";
+import Dashboard from "./Pages/Dashboard/dashboard.jsx";
+import Application from "./Pages/Application/application.jsx";
+import GramaDashboard from "./Pages/GramaDashboard/gramaDashboard.jsx";
+import SlackSupport from "./Pages/SlackSupport/slackSupport.jsx";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 
 function App() {
+
   return (
-    <AuthProvider
-    config={ {
-        signInRedirectURL: "http://localhost:3000",
-        signOutRedirectURL: "http://localhost:3000",
-        clientID: "ryD1c5JfkrO3MRH1CPQn_E8vInEa",
-        baseUrl: "https://api.asgardeo.io/t/sagini",
-        scope: [ "openid","profile" ]
-    } }
->
-  <Auth/>
-</AuthProvider>
+    <div>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/application" element={<Application />} />
+          <Route path="/grama-dashboard" element={<GramaDashboard />} />
+          <Route path="/slack-support" element={<SlackSupport/>}></Route>
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

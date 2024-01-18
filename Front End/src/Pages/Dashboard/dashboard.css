@@ -1,59 +1,57 @@
+.container {
+  height: 15vh;
+}
+
 .main-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    width: 500px; /* Adjust as needed */
-    height: 600px; /* Adjust as needed */
-    border: 2px solid #007bff;
-    border-radius: 15px;
-    background-color: #ffffff;
-    margin: 20px auto; /* Auto margin for centering horizontally */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  flex-direction: row;
+}
+
+.welcome-heading{
+  font-size: 2em;
+  text-align: center;
+}
+
+.dashboard-tile {
+  border: none;
+  width: 200px;
+  height: 200px;
+}
+
+.dashboard-tile img {
+  width: 100%; 
+  height: auto; 
+  border-radius: 4px; 
+}
+
+@media (max-width: 1500px) {
+  .main-container {
+    flex-direction: column; 
+    /* align-items: stretch;  */
+    height: auto; 
   }
-  
-  .menu-container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+
+  .dashboard-tile {
+    width: 100%; 
+    max-width: none; 
+    margin: 5px 0; 
+    height: auto;
   }
-  
-  .menu-header {
-    font-size: 1.5em;
-    margin-bottom: 10px;
+}
+
+@media (max-width: 500px){
+  .welcome-heading{
+    font-size: 1em;
   }
-  
-  .menu-box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  .menu-button {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
-    border: 2px solid #007bff;
-    border-radius: 15px;
-    background-color: #ffffff;
-    cursor: pointer;
-    transition: background-color 0.3s, border-color 0.3s;
-    margin-bottom: 15px;
-    width: 200px; /* Adjust as needed */
-  }
-  
-  .menu-button:hover {
-    background-color: #007bff;
-    color: #ffffff;
-    border-color: #ffffff;
-  }
-  
-  .icon {
-    font-size: 3em;
-    margin-bottom: 10px;
-  }
-  
-  .text {
-    font-size: 1.5em;
-  }
-  
+}

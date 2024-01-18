@@ -1,6 +1,9 @@
 import ballerina/http;
 import ballerinax/mysql;
 import ballerina/time;
+import ballerina/io;
+
+
 
 configurable string USER = ?;
 configurable string PASSWORD = ?;
@@ -8,14 +11,14 @@ configurable string HOST = ?;
 configurable int PORT = ?;
 configurable string DATABASE = ?;
 
-final mysql:Client dbClient = check new(
-host=HOST, user=USER, password=PASSWORD, port=PORT, database=DATABASE
+final mysql:Client policeDb = check new(
+host=HOST, user=USER, password=PASSWORD, port=PORT, database=DATABASE,connectionPool ={maxOpenConnections: 2}
 );
 
 
 type CriminalRecord record {|
   int convictionID; 
-  string offendersNIC;
+  string NIC;
   string offenderName;
   string offenseType;
   time:Date convictionDate;
@@ -27,7 +30,7 @@ type CriminalRecord record {|
 |};
 
 type CriminalRecordResponse record {|
-    boolean isCriminalRecords;
+    int isCriminalRecords;
     CriminalRecord [] userCriminalRecords;
 |};
 
@@ -37,31 +40,50 @@ type RecordNotFound record {
 };
 
 
-service /policeCheck on new http:Listener(9090) {
+service /policeCheck on new http:Listener(9091) {
 
-
-resource function get checkCriminalRecords/[string NIC]() returns CriminalRecordResponse|error {
+resource function get checkCriminal(string NIC) returns int|error {
 
 CriminalRecord [] criminalRecords = [];
-    stream<CriminalRecord, error?> resultStream = dbClient->query(
-        `SELECT * FROM CriminalConvictions WHERE offendersNIC = ${NIC}`);
+    stream<CriminalRecord, error?> resultStream = policeDb->query(
+        `SELECT * FROM CriminalConvictions WHERE NIC = ${NIC}`);
     check from CriminalRecord userCriminalRecord in resultStream
         do {
             criminalRecords.push(userCriminalRecord);
         };
-    check resultStream.close();
+
+    if criminalRecords.length() >0 {
+        io:println("User is a criminal");
+        return 1;
+    }else{
+        io:println("User is not a criminal");
+        return 0;
+    }
+    
+}
+
+resource function get checkCriminalRecords(string NIC) returns CriminalRecordResponse|error {
+
+CriminalRecord [] criminalRecords = [];
+    stream<CriminalRecord, error?> resultStream = policeDb->query(
+        `SELECT * FROM CriminalConvictions WHERE NIC = ${NIC}`);
+    check from CriminalRecord userCriminalRecord in resultStream
+        do {
+            criminalRecords.push(userCriminalRecord);
+        };
+    
     
     CriminalRecordResponse criminalRecordResponse;
 
     if criminalRecords.length() >0 {
 
         criminalRecordResponse= {
-        isCriminalRecords: true,
+        isCriminalRecords:1,
         userCriminalRecords:criminalRecords
         };
     }else{
         criminalRecordResponse= {
-        isCriminalRecords: false,
+        isCriminalRecords:0,
         userCriminalRecords:criminalRecords
         };
     }
