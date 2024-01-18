@@ -1,5 +1,5 @@
 FROM node:18-slim as build-stage
-WORKDIR /grama-check
+WORKDIR /Front End
 COPY package.json .
 RUN npm install
 COPY . .
@@ -10,7 +10,7 @@ FROM nginxinc/nginx-unprivileged:latest
 
 COPY conf/nginx.conf /etc/nginx/conf.d/
 
-COPY --from=build-stage /grama-check/dist /usr/share/nginx/html
+COPY --from=build-stage /Front End/dist /usr/share/nginx/html
 USER 10014
 EXPOSE 8080 
 
