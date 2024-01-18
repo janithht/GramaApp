@@ -20,7 +20,11 @@ configurable string PASSWORD = ?;
 configurable string DATABASE = ?;
 configurable int PORT = ?;
 
-mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 5});
+mysql:Client nationalDb = check new(host=HOST, user=USER, password=PASSWORD, database=DATABASE, port=PORT,connectionPool ={maxOpenConnections: 2});
+
+function isEqual(string citizenAddress,string userAddress) returns boolean{
+    return citizenAddress.trim().equalsIgnoreCaseAscii(userAddress);
+}
 
 service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns int {
@@ -35,19 +39,20 @@ service /addressCheck on new http:Listener(9092) {
             log:printError("SQL error: " + user.message());
             return 1;
 
-        }else if user is Citizen{
+        }
+        
+        if user is Citizen{
             if (isEqual(citizen.no,user.no) && isEqual(citizen.street1,user.street1) && isEqual(citizen.street2,user.street2) && isEqual(citizen.city,user.city) ) {
 
-            return 0;
+                return 0;
 
-        } else {
-            log:printError("Error");
-            return 1;
-        } 
+            } else {
+                log:printError("Error");
+                return 1;
+            } 
         }
+
+        return 1;
     }
 }
 
-function isEqual(string citizenAddress,string userAddress) returns boolean{
-    return citizenAddress.trim().equalsIgnoreCaseAscii(userAddress);
-}
