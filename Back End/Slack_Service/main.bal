@@ -4,8 +4,8 @@ import ballerinax/slack;
 
 configurable string token = ?; 
 
-public function main() returns error? {
-    boolean | error? writeMessageResult = writeMessage("test 8");
+public function main(string message) returns error? {
+    boolean | error? writeMessageResult = writeMessage(message);
 
     if writeMessageResult is error {
         io:println(writeMessageResult);
