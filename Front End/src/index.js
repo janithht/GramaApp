@@ -4,6 +4,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { AuthProvider } from "@asgardeo/auth-react";
+import '@coreui/coreui/dist/css/coreui.min.css'
+
+
 const config ={
   signInRedirectURL: "http://localhost:3000",
   signOutRedirectURL: "http://localhost:3000",
