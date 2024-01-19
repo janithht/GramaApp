@@ -7,6 +7,7 @@ import ballerina/log;
 public type Citizen record{|
     int division_id;
     readonly string NIC;
+    string  phoneNo;
     string no;
     string street1;
     string street2;
@@ -29,7 +30,7 @@ function isEqual(string citizenAddress,string userAddress) returns boolean{
 service /addressCheck on new http:Listener(9092) {
     resource function post address(Citizen citizen) returns int {
         
-        Citizen|sql:Error user = nationalDb->queryRow(`Select division_id,NIC,no,street1,street2,city,postalcode from users where NIC = ${citizen.NIC}`);
+        Citizen|sql:Error user = nationalDb->queryRow(`Select division_id,NIC,contactNo,no,street1,street2,city,postalcode from users where NIC = ${citizen.NIC}`);
 
         if user is sql:NoRowsError {  // User Not Found
             log:printError("User Not Found"+user.message());
