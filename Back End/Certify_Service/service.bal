@@ -17,7 +17,7 @@ service /gramaCertificate on new http:Listener(9093) {
     }
 
     resource function post addCertificateRequest(@http:Payload NewRequest req) returns int|error? {
-        //req should be in the form { "division_id": 1, "NIC": "string", "address": "string" }
+        
         return addCertificateRequest(req);
     }
 

@@ -7,6 +7,7 @@ import ballerina/log;
 public type Citizen record{|
     int division_id;
     readonly string NIC;
+    @sql:Column{name: "contactNo"}
     string  phoneNo;
     string no;
     string street1;

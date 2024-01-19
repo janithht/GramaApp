@@ -29,6 +29,7 @@ public type division_record record {|
 public type NewRequest record{|
     int division_id;
     readonly string NIC;
+    @sql:Column{name: "contactNo"}
     string  phoneNo;
     string no;
     string street1;
