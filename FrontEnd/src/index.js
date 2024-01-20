@@ -1,27 +1,25 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
 import { AuthProvider } from "@asgardeo/auth-react";
-import '@coreui/coreui/dist/css/coreui.min.css'
+import "@coreui/coreui/dist/css/coreui.min.css";
 
-
-const config ={
+const config = {
   signInRedirectURL: "http://localhost:3000",
   signOutRedirectURL: "http://localhost:3000",
   clientID: "ryD1c5JfkrO3MRH1CPQn_E8vInEa",
   baseUrl: "https://api.asgardeo.io/t/sagini",
-  scope: ["openid", "profile", 'groups'],
+  scope: ["openid", "profile", "groups"],
 };
 
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <AuthProvider
-        config={config}>
+    <AuthProvider config={config}>
       <App />
-        </AuthProvider>
+    </AuthProvider>
   </React.StrictMode>
 );
 

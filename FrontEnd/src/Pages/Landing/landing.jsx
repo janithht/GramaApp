@@ -10,7 +10,6 @@ const LandingPage = () => {
     state?.isAuthenticated &&
     getBasicUserInfo().then((response) => {
       setUserDetails(response);
-      console.log(response.groups);
     });
   }, [getBasicUserInfo, state?.isAuthenticated]);
 
@@ -33,7 +32,7 @@ const LandingPage = () => {
           <div className="welcome-container">
             <img
               src="https://firebasestorage.googleapis.com/v0/b/web-login-7e719.appspot.com/o/Certification.gif?alt=media&token=2e27c604-5df7-469e-aa3d-efe035d5a944"
-              alt="landing-page-welcome-image"
+              alt="landing-page-welcome"
               className="welcome-image"
             />
             <div className="welcome-text">
