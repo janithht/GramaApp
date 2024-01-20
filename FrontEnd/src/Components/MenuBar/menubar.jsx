@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import "./menubar.css";
 import Button from "../Button/button";
 import { useAuthContext } from "@asgardeo/auth-react";
-import { useNavigate } from "react-router-dom";
 
 const MenuBar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -21,18 +20,13 @@ const MenuBar = () => {
 
   const { signOut } = useAuthContext();
 
-  const navigate = useNavigate();
-
   return (
     <div className="menu-bar">
-      <p className="grama-name">Grama Check</p>
+      <span>
+      <img src={user?.picture} alt="avatar" className="chat-avatar mt-0" />
+      <span className="user-name">{user?.name}</span>
+      </span>
       <div className="nav-menu">
-        <img
-          src={user?.picture}
-          alt="avatar"
-          className="chat-avatar"
-        />
-        <p className="user-name">{user?.name}</p>
         <Button className="menu-btn" onClick={() => signOut()}>
           Logout
         </Button>
@@ -44,9 +38,7 @@ const MenuBar = () => {
       </div>
       {isMobileMenuOpen && (
         <div className="mobile-menu">
-          <button className="menu-item">Main Menu</button>
-          {/* <MdContactSupport className="support-icon" size={35} />  */}
-          <button className="menu-item">Support</button>
+          <p className=" mobile-username">{user?.name}</p>
           <button className="menu-item" onClick={() => signOut()}>
             Logout
           </button>
