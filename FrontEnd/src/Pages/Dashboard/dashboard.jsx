@@ -116,12 +116,12 @@ const Dashboard = () => {
 
   return (
     // loading ?
-    <div>
-      <div className="container">
-        <MenuBar />
+    <div className="full-container">
+      <div className="menubar-container">
+      <MenuBar />
       </div>
       <div className="main-container">
-        {/* <p className="welcome-heading">Welcome to Grama Check!</p> */}
+        <p className="welcome-heading">Welcome to Grama Check!</p>
         <div className="menu-container">
           <Tile
             text="Apply for Certificate"
