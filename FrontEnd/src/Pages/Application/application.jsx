@@ -4,7 +4,8 @@ import MenuBar from '../../Components/MenuBar/menubar.jsx';
 import InputField from "../../Components/Input/input.jsx";
 import "./application.css";
 import applyCertificate from "../../Assets/Apply.png";
-import Button from "../../Components/Button/button.jsx"
+import Button from "../../Components/Button/button.jsx";
+
 
 
 const Application = () => {
@@ -34,12 +35,10 @@ const Application = () => {
   const handleGramaSevaDivisionChange = (e) => setGramaSevaDivision(e.target.value);
 
   return (
-    <div>
-      <div className='container'>
+    <div className='full-container'>
         <MenuBar />
-      </div>
       <div className="main-form-container">
-        <div className="image-container">
+        <div className="img-container">
           <div className='heading-3'>
             <h2 className='text'>Apply for Grama Sevaka Certificate Online!</h2>
             <p className='text'>Fill the details and click submit button. You will be notified once the certificate is ready</p>

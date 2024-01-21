@@ -24,7 +24,7 @@ const MenuBar = () => {
   const { signOut } = useAuthContext();
 
   return (
-    <div className="menu-bar">
+    <div className="menu-bar" >
       <span>
         <img src={`${user?.picture || 'https://st4.depositphotos.com/21557188/23289/v/450/depositphotos_232898026-stock-illustration-simple-silhouette-man-flat-icon.jpg'}`} alt="avatar" className="chat-avatar mt-0" />
         <span className="user-name">
