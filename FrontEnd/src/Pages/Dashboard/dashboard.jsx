@@ -17,78 +17,101 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  CSpinner,
+  // CSpinner,
 } from "@coreui/react";
+import { getToken } from "../../Utils/getToken.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("Type your message here...");
+  const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   // const [loading, setLoading] = useState(false);
+  const [token, setToken] = useState("");
+
+  const handleToken = async () => {
+    const token = await getToken();
+    setToken(token);
+  };
 
   useEffect(() => {
-    axios
-      .get(
-        "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages"
-      )
-      .then((res) => {
-        setChatHistory([]);
-        res?.data?.map((chat) => {
-          const formatted = moment.unix(chat.timestamp).format("LLLL");
-          const current_date = moment().format("MMM Do YY");
-          const chat_date = moment(formatted).format("MMM Do YY");
-          var date_object = new Date(formatted);
-          var time_only = date_object.toLocaleTimeString([], {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
-          var date;
-          if (current_date !== chat_date) {
-            date = formatted.slice(0, -14);
-            if (date.endsWith(",")) {
-              date = formatted.slice(0, -15);
-            }
-            if (date.endsWith("1")) {
-              date += "st";
-            } else if (date.endsWith("2")) {
-              date += "nd";
-            } else if (date.endsWith("3")) {
-              date += "rd";
+    // handleToken();
+    // if (token !== "") {
+      axios
+        .get(
+          "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages",
+          // {
+          //   headers: {
+          //     Accept: "application/scim+json",
+          //     Authorization: `Bearer ${token}`,
+          //   },
+          // }
+        )
+        .then((res) => {
+          setChatHistory([]);
+          res?.data?.map((chat) => {
+            const formatted = moment.unix(chat.timestamp).format("LLLL");
+            const current_date = moment().format("MMM Do YY");
+            const chat_date = moment(formatted).format("MMM Do YY");
+            var date_object = new Date(formatted);
+            var time_only = date_object.toLocaleTimeString([], {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+            var date;
+            if (current_date !== chat_date) {
+              date = formatted.slice(0, -14);
+              if (date.endsWith(",")) {
+                date = formatted.slice(0, -15);
+              }
+              if (date.endsWith("1")) {
+                date += "st";
+              } else if (date.endsWith("2")) {
+                date += "nd";
+              } else if (date.endsWith("3")) {
+                date += "rd";
+              } else {
+                date += "th";
+              }
             } else {
-              date += "th";
+              date = "Today";
             }
-          } else {
-            date = "Today";
-          }
-          setChatHistory((prev) => [
-            ...prev,
-            {
-              user: chat.user,
-              message: chat.message,
-              timestamp: formatted,
-              time_only,
-              date,
-            },
-          ]);
+            setChatHistory((prev) => [
+              ...prev,
+              {
+                user: chat.user,
+                message: chat.message,
+                timestamp: formatted,
+                time_only,
+                date,
+              },
+            ]);
+          });
+          // setLoading(false);
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        // setLoading(false);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    // }
   }, [visible]);
 
   const handleSendMessage = () => {
-    axios
-      .post(
-        "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=" +
-          message
-      )
-      .then((res) => setVisible(false))
-      .catch((err) => {
-        console.log("error:", err);
-      });
+    // if (token !== "") {
+      axios
+        .post(
+          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
+          // {
+          //   headers: {
+          //     Accept: "application/scim+json",
+          //     Authorization: `Bearer ${token}`,
+          //   },
+          // }
+        )
+        .then((res) => setVisible(false))
+        .catch((err) => {
+          console.log("error:", err);
+        });
+    // }
   };
 
   return (
@@ -98,7 +121,7 @@ const Dashboard = () => {
         <MenuBar />
       </div>
       <div className="main-container">
-        <p className="welcome-heading">Welcome to Grama Check!</p>
+        {/* <p className="welcome-heading">Welcome to Grama Check!</p> */}
         <div className="menu-container">
           <Tile
             text="Apply for Certificate"

@@ -1,6 +1,6 @@
 .custom-button {
   width: fit-content;
-  background-color: #A05B9D; 
+  background-color:  hsl(291, 47%, 60%); 
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 10px;
@@ -16,7 +16,7 @@
 }
 
 .custom-button:hover {
-  background-color: #ac34a6; /* Change color on hover */
+  background-color: #A05B9D; /* Change color on hover */
 }
 
 /* Additional Styles to Reset Anchor Styles */
