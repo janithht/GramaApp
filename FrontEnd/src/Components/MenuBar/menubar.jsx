@@ -52,7 +52,7 @@
 
 import React, { useEffect, useState } from "react";
 import "./menubar.css";
-import CustomButton from "../CustomButton/custombutton";
+import CustomButton from "../Button/button";
 import { useAuthContext } from "@asgardeo/auth-react";
 import { useNavigate } from "react-router-dom";
 import { IoHome,IoLogOut } from "react-icons/io5";
@@ -91,6 +91,12 @@ const MenuBar = () => {
         <CustomButton onClick={() => signOut()}>
           <IoLogOut size={25}/>
         </CustomButton>
+        <CustomButton  onClick={() => navigate("/dashboard")}>
+          <IoHome size={25} />
+        </CustomButton>
+        <CustomButton onClick={() => signOut()}>
+          <IoLogOut size={25}/>
+        </CustomButton>
       </div>
       <div className="menu-icon" onClick={toggleMobileMenu}>
         <span className="menu-dot"></span>
@@ -99,15 +105,6 @@ const MenuBar = () => {
       </div>
       {isMobileMenuOpen && (
         <div className="mobile-menu">
-          <p className=" mobile-username">
-            {user?.givenName} {user?.familyName}
-          </p>
-          <CustomButton className="menu-item" onClick={() => navigate("/dashboard")}>
-            <IoHome size={20} /> Main Menu
-          </CustomButton>
-          <CustomButton className="menu-item" onClick={() => signOut()}>
-            <IoLogOut size={20}/> Logout
-          </CustomButton>
           <p className=" mobile-username">
             {user?.givenName} {user?.familyName}
           </p>
