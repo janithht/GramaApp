@@ -4,7 +4,7 @@ import Dashboard from "./Pages/Dashboard/dashboard.jsx";
 import Application from "./Pages/Application/application.jsx";
 import GramaDashboard from "./Pages/GramaDashboard/gramaDashboard.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import StatusChecks from "./Pages/StatusChecks/statuschecks.jsx";
+// import StatusChecks from "./Pages/StatusChecks/statuschecks.jsx";
 
 function App() {
 
@@ -15,7 +15,7 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/application" element={<Application />} />
-          <Route path="/statuscheck" element={<StatusChecks />} />
+          {/* <Route path="/statuscheck" element={<StatusChecks />} /> */}
           <Route path="/grama-dashboard" element={<GramaDashboard />} />          
         </Routes>
       </Router>

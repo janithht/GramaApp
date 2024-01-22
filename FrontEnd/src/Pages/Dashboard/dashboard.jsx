@@ -35,6 +35,7 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
+    setMessage("");
     // handleToken();
     // if (token !== "") {
       axios
