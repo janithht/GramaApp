@@ -1,0 +1,135 @@
+  .full-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .main-status-container {
+    margin: 20px;
+  }
+  
+  .info-container {
+    width: 80%;
+    margin: 0 auto;
+  }
+  
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+
+  
+   tr {
+    display: flex;
+    margin-bottom: 15px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease-in-out;
+  }
+  
+  tr:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  th, td {
+    padding: 12px;
+    text-align: center;
+    width: 100%;
+  }
+
+  .expand-icon {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .expand-icon svg {
+    transition: transform 0.3s ease-in-out;
+  }
+  
+  .expand-icon.expanded svg {
+    transform: rotate(180deg);
+  }
+  
+  .expanded-row {
+    background-color: #f9f9f9;
+  }
+
+  .expanded-row-div{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+  }
+  
+  .check-icon, .cross-icon {
+    margin-right: 5px;
+    color: green;
+  }
+
+  .cross-icon {
+    margin-right: 5px;
+    color: red;
+  }
+
+
+  .check-icon{
+    color: green;
+  }
+  
+  .topic-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .topic-text {
+    font-size: 1.5em;
+    text-align: center;
+  }
+  
+  .imgs-container {
+    display: flex;
+    justify-content: center;
+  }
+  
+  .status-image {
+    width: 10%;
+    height: auto;
+    border-radius: 4px;
+  }
+  
+  th {
+    text-align: center;
+  }
+  
+  .status-badge {
+    padding: 5px;
+    border-radius: 20px;
+
+  }
+  
+  .status-rejected {
+    background-color: #Fabbc8; 
+    border: 1px solid #911a33;
+    color: #911a33;
+  }
+  
+  .status-approved {
+    background-color: #A9e098; 
+    border: 1px solid #508f3c;
+    color: #508f3c;
+  }
+  
+  .status-completed {
+    background-color: #B5d6e2;
+    color: #0f5164; 
+    border: 1px solid #59a6c1;
+  }

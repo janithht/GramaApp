@@ -1,7 +1,7 @@
 .dashboard-tile {
     width: 100%;
     max-width: 300px;
-    height: 80%;
+    height: auto;
     background-color: #ffffff;
     border: 1px solid #ddd;
     border-radius: 8px;

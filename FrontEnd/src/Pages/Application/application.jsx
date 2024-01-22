@@ -20,12 +20,10 @@ const Application = () => {
   
     useEffect(() => {
         getBasicUserInfo().then((response) => {
-        setUserEmail(state.session?.user?.email);
-        console.log("email : ",response);
+        setUserEmail(response.email);
+        console.log("email : ",response.email);
         });
     }, [getBasicUserInfo]);
-
-    // userEmail = state.session?.user?.email;
 
     const validateField = (field, value) => {
         try {
@@ -60,7 +58,7 @@ const Application = () => {
             NIC: values.nic,
             city: values.city,
             division_id: parseInt(values.gramaSevaDivision, 10), 
-            email: userEmail,
+            email: "hello@123.com",
             no: values.addressNumber,
             phoneNo: values.tele,
             postalcode: values.postalcode,
