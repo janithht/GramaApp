@@ -10,7 +10,8 @@ const validationSchema = yup.object().shape({
   street1: yup.string().required('Required'),
   street2: yup.string(),
   city: yup.string().required('Required'),
+  postalcode: yup.string().required('Required'),
   gramaSevaDivision: yup.string().required('Required'),
 });
-
+  
 export default validationSchema;

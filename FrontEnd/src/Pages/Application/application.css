@@ -82,6 +82,16 @@
   margin-top: 5px;
 }
 
+.valid {
+  border: 1px solid #ced4da !important;
+  border-radius: 4px !important;
+}
+
+/* Add a style for valid error message */
+.valid-error-message {
+  display: none; /* Hide the error message for valid input */
+}
+
 @media (max-width: 1000px) {
   .main-form-container {
     flex-direction: column;

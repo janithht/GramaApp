@@ -13,7 +13,7 @@ const config = {
   //  "https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev",
   clientID: "ryD1c5JfkrO3MRH1CPQn_E8vInEa",
   baseUrl: "https://api.asgardeo.io/t/sagini",
-  scope: ["openid", "profile", "groups"],
+  scope: ["openid", "profile", "groups", "address", "email", "phone"],
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
