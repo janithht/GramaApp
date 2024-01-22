@@ -8,12 +8,13 @@ import "@coreui/coreui/dist/css/coreui.min.css";
 
 const config = {
   signInRedirectURL: "http://localhost:3000",
-  //  "https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev",
+  // "https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev",
   signOutRedirectURL: "http://localhost:3000",
-  //  "https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev",
+  // "https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev",
   clientID: "ryD1c5JfkrO3MRH1CPQn_E8vInEa",
+  // "PKqyYYk9z3pYc1hfheF0O5h9RaIa",
   baseUrl: "https://api.asgardeo.io/t/sagini",
-  scope: ["openid", "profile", "groups"],
+  scope: ["openid", "address", "email", "groups", "phone", "profile"],
 };
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
