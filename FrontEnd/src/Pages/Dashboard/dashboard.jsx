@@ -17,108 +17,85 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  // CSpinner,
+  CSpinner,
 } from "@coreui/react";
-import { getToken } from "../../Utils/getToken.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Type your message here...");
   const [visible, setVisible] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   // const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
-
-  const handleToken = async () => {
-    const token = await getToken();
-    setToken(token);
-  };
 
   useEffect(() => {
-    // handleToken();
-    // if (token !== "") {
-      axios
-        .get(
-          "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages",
-          // {
-          //   headers: {
-          //     Accept: "application/scim+json",
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
-        )
-        .then((res) => {
-          setChatHistory([]);
-          res?.data?.map((chat) => {
-            const formatted = moment.unix(chat.timestamp).format("LLLL");
-            const current_date = moment().format("MMM Do YY");
-            const chat_date = moment(formatted).format("MMM Do YY");
-            var date_object = new Date(formatted);
-            var time_only = date_object.toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            });
-            var date;
-            if (current_date !== chat_date) {
-              date = formatted.slice(0, -14);
-              if (date.endsWith(",")) {
-                date = formatted.slice(0, -15);
-              }
-              if (date.endsWith("1")) {
-                date += "st";
-              } else if (date.endsWith("2")) {
-                date += "nd";
-              } else if (date.endsWith("3")) {
-                date += "rd";
-              } else {
-                date += "th";
-              }
-            } else {
-              date = "Today";
-            }
-            setChatHistory((prev) => [
-              ...prev,
-              {
-                user: chat.user,
-                message: chat.message,
-                timestamp: formatted,
-                time_only,
-                date,
-              },
-            ]);
+    axios
+      .get(
+        "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages"
+      )
+      .then((res) => {
+        setChatHistory([]);
+        res?.data?.map((chat) => {
+          const formatted = moment.unix(chat.timestamp).format("LLLL");
+          const current_date = moment().format("MMM Do YY");
+          const chat_date = moment(formatted).format("MMM Do YY");
+          var date_object = new Date(formatted);
+          var time_only = date_object.toLocaleTimeString([], {
+            hour: "2-digit",
+            minute: "2-digit",
           });
-          // setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
+          var date;
+          if (current_date !== chat_date) {
+            date = formatted.slice(0, -14);
+            if (date.endsWith(",")) {
+              date = formatted.slice(0, -15);
+            }
+            if (date.endsWith("1")) {
+              date += "st";
+            } else if (date.endsWith("2")) {
+              date += "nd";
+            } else if (date.endsWith("3")) {
+              date += "rd";
+            } else {
+              date += "th";
+            }
+          } else {
+            date = "Today";
+          }
+          setChatHistory((prev) => [
+            ...prev,
+            {
+              user: chat.user,
+              message: chat.message,
+              timestamp: formatted,
+              time_only,
+              date,
+            },
+          ]);
         });
-    // }
+        // setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [visible]);
 
   const handleSendMessage = () => {
-    // if (token !== "") {
-      axios
-        .post(
-          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
-          // {
-          //   headers: {
-          //     Accept: "application/scim+json",
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
-        )
-        .then((res) => setVisible(false))
-        .catch((err) => {
-          console.log("error:", err);
-        });
-    // }
+    axios
+      .post(
+        "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=" +
+          message
+      )
+      .then((res) => setVisible(false))
+      .catch((err) => {
+        console.log("error:", err);
+      });
   };
 
   return (
     // loading ?
-    <div className="full-container">
-      <div className="menubar-container">
-      <MenuBar />
+    <div>
+      <div className="container">
+        <MenuBar />
       </div>
       <div className="main-container">
         <p className="welcome-heading">Welcome to Grama Check!</p>
@@ -128,7 +105,7 @@ const Dashboard = () => {
             image={applyCertificate}
             onClick={() => navigate("/application")}
           />
-          <Tile text="Check the Status" image={statusCheck} onClick={() => navigate("/statuscheck")}/>
+          <Tile text="Check the Status" image={statusCheck} />
           <div className="dashboard-tile" onClick={() => setVisible(!visible)}>
             <div className="tile-content">
               <div className="tile-image">
