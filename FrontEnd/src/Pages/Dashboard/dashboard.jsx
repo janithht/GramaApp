@@ -35,17 +35,18 @@ const Dashboard = () => {
   };
 
   useEffect(() => {
-    // handleToken();
-    // if (token !== "") {
+    setMessage("");
+    handleToken();
+    if (token !== "") {
       axios
         .get(
           "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages",
-          // {
-          //   headers: {
-          //     Accept: "application/scim+json",
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
+          {
+            headers: {
+              Accept: "application/scim+json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         .then((res) => {
           setChatHistory([]);
@@ -92,26 +93,26 @@ const Dashboard = () => {
         .catch((err) => {
           console.log(err);
         });
-    // }
+    }
   }, [visible]);
 
   const handleSendMessage = () => {
-    // if (token !== "") {
+    if (token === "") {
       axios
         .post(
-          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
-          // {
-          //   headers: {
-          //     Accept: "application/scim+json",
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
+          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`, 
+          {
+            headers: {
+              Accept: "application/scim+json",
+              Authorization: `Bearer ${token}`,
+            },
+          }
         )
         .then((res) => setVisible(false))
         .catch((err) => {
           console.log("error:", err);
         });
-    // }
+    }
   };
 
   return (
