@@ -39,12 +39,6 @@ const MenuBar = () => {
         <CustomButton onClick={() => signOut()}>
           <IoLogOut size={25}/>
         </CustomButton>
-        <CustomButton  onClick={() => navigate("/dashboard")}>
-          <IoHome size={25} />
-        </CustomButton>
-        <CustomButton onClick={() => signOut()}>
-          <IoLogOut size={25}/>
-        </CustomButton>
       </div>
       <div className="menu-icon" onClick={toggleMobileMenu}>
         <span className="menu-dot"></span>
