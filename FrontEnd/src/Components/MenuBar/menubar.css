@@ -32,9 +32,9 @@
   padding: 0px 4px;
 }
 
-/* .menu-btn{
+.menu-btn{
   border: none !important;
-} */
+}
 
 .menu-dot {
   display: block;
@@ -57,9 +57,9 @@
 }
 
 .menu-item {
-  background-color: #BA68C8 !important;
+  background-color: #BA68C8;
   color: white;
-  border: none !important;
+  border: none;
   padding: 10px;
   text-align: left;
   text-decoration: none;

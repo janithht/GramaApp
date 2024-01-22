@@ -2,7 +2,7 @@ import React from "react";
 import Landing from "./Pages/Landing/landing.jsx";
 import Dashboard from "./Pages/Dashboard/dashboard.jsx";
 import Application from "./Pages/Application/application.jsx";
-import GramaDashboard from "./Pages/GramaDashboard/gramaDashboard.jsx";
+import AdminDashboard from "./Pages/AdminDashboard/adminDashboard.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
  {/*import StatusChecks from "./Pages/StatusChecks/statuschecks.jsx";*/}
 
@@ -24,3 +24,4 @@ function App() {
 }
 
 export default App;
+
