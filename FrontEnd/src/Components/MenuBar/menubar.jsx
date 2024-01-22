@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import "./menubar.css";
-import CustomButton from "../Button/button";
+import CustomButton from "../CustomButton/custombutton";
 import { useAuthContext } from "@asgardeo/auth-react";
 import { useNavigate } from "react-router-dom";
 import { IoHome,IoLogOut } from "react-icons/io5";
