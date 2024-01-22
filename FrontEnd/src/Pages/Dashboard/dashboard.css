@@ -1,0 +1,125 @@
+.container {
+  height: 15vh;
+}
+
+.main-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.menu-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+  text-align: center;
+  flex-direction: row;
+}
+
+.welcome-heading {
+  font-size: 2em;
+  text-align: center;
+}
+
+.dashboard-tile {
+  border: none;
+  width: 200px;
+  height: 200px;
+}
+
+.dashboard-tile img {
+  width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+.ask-for-help-chat-left {
+  margin-right: 0px;
+  display: flex;
+  align-items: flex-start;
+
+}
+
+.ask-for-help-chat-right {
+  margin-left: 0px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+.chat-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 5px;
+  margin-top: 10px;
+}
+.chat-text {
+  background-color: #dfdbdb;
+  padding: 10px;
+  margin-bottom: 10px;
+  margin-top: 2px;
+  /* overflow-wrap: break-word; */
+  max-width: 100%;
+  /* word-wrap: break-word; */
+  word-break: break-all;
+  hyphens: auto;
+  text-align: justify;
+}
+
+.chat-text-left{
+  border-radius: 0px 15px 15px 15px;
+}
+
+.chat-text-right{
+  border-radius: 15px 0px 15px 15px;
+  margin-right: 5px;
+}
+
+.chat-time {
+  font-size: 0.8em;
+  color: #6d6c6c;
+  margin: 0;
+}
+
+.chat-message-send{
+  display: flex;
+  flex-wrap: nowrap !important;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.chat-divider-left{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+}
+
+.chat-divider-right{
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  
+}
+
+@media (max-width: 1500px) {
+  .main-container {
+    flex-direction: column;
+    /* align-items: stretch;  */
+    height: auto;
+  }
+
+  .dashboard-tile {
+    width: 100%;
+    max-width: none;
+    margin: 5px 0;
+    height: auto;
+  }
+}
+
+@media (max-width: 500px) {
+  .welcome-heading {
+    font-size: 1em;
+  }
+}

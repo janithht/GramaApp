@@ -1,6 +1,6 @@
 FROM node:18-slim as build-stage
-WORKDIR /Front End
-COPY package.json .
+WORKDIR /FrontEnd
+COPY package.json ./
 RUN npm install
 COPY . .
 
@@ -8,9 +8,11 @@ RUN npm run build
 
 FROM nginxinc/nginx-unprivileged:latest
 
+RUN rm /etc/nginx/conf.d/default.conf
+
 COPY conf/nginx.conf /etc/nginx/conf.d/
 
-COPY --from=build-stage /Front End/dist /usr/share/nginx/html
+COPY --from=build-stage /FrontEnd/build /usr/share/nginx/html
 USER 10014
 EXPOSE 8080 
 

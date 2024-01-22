@@ -55,7 +55,7 @@ resource function get checkCriminal(string NIC) returns int|error {
 
 CriminalRecord [] criminalRecords = [];
     stream<CriminalRecord, error?> resultStream = policeDb->query(
-        `SELECT * FROM CriminalConvictions WHERE NIC = ${NIC}`);
+        `SELECT * FROM CriminalConvictions WHERE NIC = ${NIC} and isConvicted = true`);
     check from CriminalRecord userCriminalRecord in resultStream
         do {
             criminalRecords.push(userCriminalRecord);

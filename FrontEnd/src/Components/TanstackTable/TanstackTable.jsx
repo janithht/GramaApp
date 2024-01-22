@@ -91,9 +91,7 @@ const TanstackTable =() =>{
             cell: (row,index) => (
                 row.status === 1
                     ? <button className="table-button" onClick={()=> handleClickNotify(index)} >Notify</button>
-                    : <>
-                    {/* <button className="table-button" onClick={()=>handleExpandRow(index)}>Expand</button> */}
-                    </>
+                    : <><button className="table-button" onClick={()=>handleExpandRow(index)}>Expand</button></>
             ),
         },
     ];

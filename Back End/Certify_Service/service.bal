@@ -7,7 +7,7 @@ service /gramaCertificate on new http:Listener(9093) {
     resource function get allCertRequests() returns Request[]|error {
 
         Request[] certificate_requests = [];
-        stream<Request, error?> resultStream = certifyDb->query(`SELECT * from certificaterequests WHERE status = 0`);
+        stream<Request, error?> resultStream = certifyDb->query(`SELECT * from certificaterequest`);
         check from Request req in resultStream
             do {
                 certificate_requests.push(req);
@@ -17,7 +17,7 @@ service /gramaCertificate on new http:Listener(9093) {
     }
 
     resource function post addCertificateRequest(@http:Payload NewRequest req) returns int|error? {
-        //req should be in the form { "division_id": 1, "NIC": "string", "address": "string" }
+        
         return addCertificateRequest(req);
     }
 

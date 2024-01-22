@@ -15,9 +15,9 @@ password: authToken
 
 twilio:Client twilio = check new (twilioConfig);
 
-function twilio_SMS(string message) {
+function twilio_SMS(string toMobile, string message) {
     twilio:CreateMessageRequest messageRequest = {
-    To: "+94714591034", 
+    To: toMobile, 
     From: fromMobile, 
     Body: message
 };
