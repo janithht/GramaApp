@@ -1,90 +1,90 @@
 
 .landing-page {
-    text-align: center;
-    padding: 20px;
+  text-align: center;
+  padding: 20px;
+}
+.landing-page-header-logo-image{
+  width: 25%;
+  height: 25%;
+}
+
+h1 {
+  display: inline-block;
+}
+
+main {
+  margin: 20px 0;
+}
+
+.welcome-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.welcome-image {
+  width: 30%;
+  height: 30%;
+  margin-right: 10%;
+}
+
+.welcome-text {
+  max-width: 500px;
+  text-align: left;
+}
+
+.welcome-header {
+  font-size: 35px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+.welcome-message {
+  font-size: 18px;
+  font-family: sans-serif;
+  font-weight: normal;
+  margin-bottom: 10px;
+}
+
+button {
+  background-color: #520570;
+  color: #fff;
+  padding: 10px 17px;
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  margin-top: 10px;
+  margin-block: 10px;
+  border-radius: 5px !important;
+}
+
+button:hover {
+  background-color: #b739d7;
+  color: #fff;
+}
+
+footer {
+  margin-top: 20px;
+  color: #777;
+}
+
+@media screen and (max-width: 768px) {
+  .welcome-image {
+    display: none;
   }
   .landing-page-header-logo-image{
-    width: 25%;
-    height: 25%;
+    width: 50%;
+    height: 50%;
   }
-  
-  h1 {
-    display: inline-block;
-  }
-  
-  main {
-    margin: 20px 0;
-  }
-  
   .welcome-container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    flex-direction: column;
   }
-  
   .welcome-image {
-    width: 30%;
-    height: 30%;
-    margin-right: 10%;
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 20px;
   }
-  
   .welcome-text {
-    max-width: 500px;
-    text-align: left;
+    text-align: center;
   }
   
-  .welcome-header {
-    font-size: 35px;
-    font-weight: bold;
-    margin-bottom: 10px;
-  }
-  .welcome-message {
-    font-size: 18px;
-    font-family: sans-serif;
-    font-weight: normal;
-    margin-bottom: 10px;
-  }
-  
-  button {
-    background-color: #520570;
-    color: #fff;
-    padding: 10px 17px;
-    font-size: 16px;
-    border: none;
-    cursor: pointer;
-    margin-top: 10px;
-    margin-block: 10px;
-    border-radius: 5px !important;
-  }
-  
-  button:hover {
-    background-color: #b739d7;
-    color: #fff;
-  }
-  
-  footer {
-    margin-top: 20px;
-    color: #777;
-  }
-  
-  @media screen and (max-width: 768px) {
-    .welcome-image {
-      display: none;
-    }
-    .landing-page-header-logo-image{
-      width: 50%;
-      height: 50%;
-    }
-    .welcome-container {
-      flex-direction: column;
-    }
-    .welcome-image {
-      width: 100%;
-      margin-right: 0;
-      margin-bottom: 20px;
-    }
-    .welcome-text {
-      text-align: center;
-    }
-    
-  }
+}

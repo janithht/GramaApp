@@ -21,4 +21,16 @@ service /gramaCertificate on new http:Listener(9093) {
         return addCertificateRequest(req);
     }
 
+    resource function put updateStatus(int requestId) returns int|error? {
+        
+        int affectedRows = check notificationUpdate(requestId);
+        if (affectedRows > 0) {
+            // Successfully updated the status
+            return 200; // HTTP 200 OK
+        } else {
+            // Failed to update the status
+            return 500; // HTTP 500 Internal Server Error
+        }
+    }
+
 }

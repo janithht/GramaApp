@@ -1,9 +1,10 @@
 .main-container2 {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 90vw;
-  background-color: #ffffff;
-  margin: 2vw 5vw 2vw 5vw ; 
-}
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 90vw;
+    background-color: #ffffff;
+    margin: 2vw 5vw 2vw 5vw ; 
+  }
+  
