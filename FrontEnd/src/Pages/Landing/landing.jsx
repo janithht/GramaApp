@@ -7,6 +7,7 @@ const LandingPage = () => {
   const [userDetails, setUserDetails] = useState();
   
   useEffect(() => {
+    console.log("state:",state);
     state?.isAuthenticated &&
     getBasicUserInfo().then((response) => {
       setUserDetails(response);

@@ -17,13 +17,13 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  // CSpinner,
+  CSpinner,
 } from "@coreui/react";
 import { getToken } from "../../Utils/getToken.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Type your message here...");
   const [visible, setVisible] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   // const [loading, setLoading] = useState(false);
@@ -117,9 +117,9 @@ const Dashboard = () => {
 
   return (
     // loading ?
-    <div className="full-container">
-      <div className="menubar-container">
-      <MenuBar />
+    <div>
+      <div className="container">
+        <MenuBar />
       </div>
       <div className="main-container">
         <p className="welcome-heading">Welcome to Grama Check!</p>

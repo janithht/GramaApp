@@ -40,6 +40,15 @@ type RecordNotFound record {
 };
 
 
+@http:ServiceConfig {
+    cors: {
+        allowOrigins: ["http://localhost:3000"],
+        allowCredentials: true,
+        allowMethods: ["GET", "POST", "OPTIONS", "PUT", "DELETE"]
+    }
+}
+
+
 service /policeCheck on new http:Listener(9091) {
 
 resource function get checkCriminal(string NIC) returns int|error {

@@ -1,7 +1,0 @@
-.chat-message-send{
-    display: flex;
-    flex-wrap: nowrap !important;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-  }
