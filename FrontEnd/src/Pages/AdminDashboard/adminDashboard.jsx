@@ -11,7 +11,7 @@ const AdminDashboard = () => {
     return (
         <div>
           <MenuBar />
-            <div className='main-container2'>
+          <div className='main-container2'>
           <div><h1>Certificate Requests</h1></div>
           <TanstackTable />
         </div> 

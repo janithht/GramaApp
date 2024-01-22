@@ -1,13 +1,16 @@
 export const getToken = async () => {
     const orgName = "interns";
-    const clientID = "Ae9Jg4gE5j0VPPjHBnRm0Q7jZfga";
-    // "2SBX8j5UfdjnBqU_ZP88Alrpmv4a"; // service token
-    const clientSecret = "szaZwVsAn18mswGPf6JPUGfAZ8Qa";
-    // "ptX7EqRN_1TATpY0KytXsw16A_RlNI3sMkd1aT_QwdYa";
+    const clientID =
+    //  "Ae9Jg4gE5j0VPPjHBnRm0Q7jZfga"; //webhook 
+    "2SBX8j5UfdjnBqU_ZP88Alrpmv4a"; // service token
+    const clientSecret = 
+    // "szaZwVsAn18mswGPf6JPUGfAZ8Qa";
+    "ptX7EqRN_1TATpY0KytXsw16A_RlNI3sMkd1aT_QwdYa";
     const scope = "openid address email groups phone profile roles";
   
-    const tokenEndpoint = `https://sts.choreo.dev/oauth2/token`;
-    // "https://api.asgardeo.io/t/interns/oauth2/token";
+    const tokenEndpoint = 
+    // `https://sts.choreo.dev/oauth2/token`;
+    `https://api.asgardeo.io/t/${orgName}/oauth2/token`;
     const headers = new Headers({
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Basic ${btoa(`${clientID}:${clientSecret}`)}`,
@@ -34,6 +37,7 @@ export const getToken = async () => {
   
       const data = await response.json();
       const accessToken = data.access_token;
+      // console.log("accessToken: ",accessToken);
       return accessToken;
     } catch (error) {
       console.error("Error:", error.message);
