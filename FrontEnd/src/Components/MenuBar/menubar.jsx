@@ -57,15 +57,11 @@ import { useAuthContext } from "@asgardeo/auth-react";
 import { useNavigate } from "react-router-dom";
 import { IoHome,IoLogOut } from "react-icons/io5";
 
-import { useNavigate } from "react-router-dom";
-import { IoHome,IoLogOut } from "react-icons/io5";
-
 
 const MenuBar = () => {
   const [isMobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { getBasicUserInfo } = useAuthContext();
   const [user, setUser] = useState();
-  const navigate = useNavigate();
   const navigate = useNavigate();
 
   useEffect(() => {
