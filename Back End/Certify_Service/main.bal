@@ -123,6 +123,22 @@ function updateStatus(int id, int policeCheck, int identityCheck, int addressChe
 }
 
 
+function notificationUpdate(int id) returns int|error {
+    sql:ExecutionResult result = check certifyDb->execute(`
+        UPDATE certificaterequest
+        SET status = 3
+        WHERE req_id = ${id}`);
+    
+    int|string? affectedRowCount = result.affectedRowCount;
+
+    if affectedRowCount is int {
+        return affectedRowCount;
+    } else {
+        return error("Unable to obtain affected row count");
+    }
+}
+
+
 
 
 
