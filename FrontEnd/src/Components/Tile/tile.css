@@ -1,6 +1,6 @@
 .dashboard-tile {
-    width: 100%; /* Fluid width, takes up the full width of its container */
-    max-width: 300px; /* Set a maximum width if needed */
+    width: 100%;
+    max-width: 300px;
     height: 80%;
     background-color: #ffffff;
     border: 1px solid #ddd;
@@ -19,26 +19,25 @@
   }
   
   .tile-image img {
-    width: 60%; /* Ensure the image takes up the full width of its container */
-    height: auto; /* Maintain aspect ratio */
-    border-radius: 4px; /* Optional: Add border-radius to the image */
+    width: 60%; 
+    height: auto; 
+    border-radius: 4px;
   }
   
   .tile-text {
-    margin-top: 10px; /* Adjust the top margin as needed */
+    margin-top: 10px; 
     font-size: 1.2em;
     color: #333;
     text-align: center;
   }
   
-  /* Media Query for Mobile Responsive */
+  
   @media (max-width: 1000px) {
     .dashboard-tile {
-      max-width: calc(50% - 20px); /* Adjust the maximum width for better responsiveness on smaller screens */
-      /* Set max-width to 50% of the container width with some margin on both sides */
-      width: 100%; /* Ensure full width for better responsiveness */
+      max-width: calc(50% - 20px); 
+      width: 100%; 
       height: auto;
-      box-sizing: border-box; /* Include padding and border in the element's total width and height */
+      box-sizing: border-box; 
     }
   }
   
