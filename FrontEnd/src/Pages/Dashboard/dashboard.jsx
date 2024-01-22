@@ -129,7 +129,7 @@ const Dashboard = () => {
             image={applyCertificate}
             onClick={() => navigate("/application")}
           />
-          <Tile text="Check the Status" image={statusCheck} />
+          <Tile text="Check the Status" image={statusCheck} onClick={() => navigate("/statuschecks")}/>
           <div className="dashboard-tile" onClick={() => setVisible(!visible)}>
             <div className="tile-content">
               <div className="tile-image">
