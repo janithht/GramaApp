@@ -1,12 +1,9 @@
-.container {
-  height: 15vh;
-}
-
 .main-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  margin-top: 10vh;
 }
 
 .menu-container {
@@ -59,9 +56,7 @@
   padding: 10px;
   margin-bottom: 10px;
   margin-top: 2px;
-  /* overflow-wrap: break-word; */
   max-width: 100%;
-  /* word-wrap: break-word; */
   word-break: break-all;
   hyphens: auto;
   text-align: justify;
