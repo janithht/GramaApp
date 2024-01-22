@@ -1,4 +1,4 @@
-.container{
+/* .container{
   height: 15vh;
 }
 
@@ -74,15 +74,6 @@
 
 }
 
-/* .select-input {
-  width: 85%;
-} */
-
-/* .text-input{
-  width:85%;
-} */
-
-
 .error-message {
   color: red;
   font-size: 12px;
@@ -145,5 +136,138 @@
   .select-input{
     width: 95%;
   }
+} */
+
+.full-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
 }
+
+.menubar-container{
+  height: 15vh;
+}
+
+.main-form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 83vh;
+}
+
+.form-container {
+  width: 60%;
+  padding: 0px 100px;
+}
+
+.application-form {
+  padding: 0px;
+}
+
+.heading-3 {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  padding: 0px 50px;
+  align-items: center;
+}
+
+.text {
+  text-align: center;
+}
+
+.img-container {
+  width: 40%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 55px;
+  height: 83vh;
+}
+
+.side-image {
+  height: auto;
+  border-radius: 4px;
+  justify-content: center;
+  width: 60%;
+}
+
+/* .select-input {
+  width: 85%;
+} */
+
+/* .text-input{
+  width:85%;
+} */
+
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.input-field-div{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.mb-3{
+  margin: 10px;
+  width: 85% !important;
+}
+
+.mb-3.error {
+  border: 1px solid red !important; 
+  border-radius: 4px !important;
+} 
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+@media (max-width: 1000px) {
+  .main-form-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .side-image {
+    display: none; 
+  }
+
+  .form-container {
+    width: 80%;
+    padding: 0px;
+    text-align: center; 
+  }
+
+  .heading-3{
+    padding: 1px;
+  }
+
+  .text{
+    font-size: smaller;  }
+
+  .image-container {
+    padding-top: 100px;
+    width: 80%;
+    align-items: center;
+  }
+
+  .submit-button{
+    width: 96%;
+  }
+  
+
+  .application-form {
+    display: flex;
+    flex-direction: column;
+  }
+
 }
