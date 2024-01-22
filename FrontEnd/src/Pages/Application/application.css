@@ -1,4 +1,10 @@
-.container{
+.full-container{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.menubar-container{
   height: 15vh;
 }
 
@@ -7,7 +13,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  height: 70vh;
+  height: 83vh;
 }
 
 .form-container {
@@ -31,47 +37,21 @@
   text-align: center;
 }
 
-.image-container {
+.img-container {
   width: 40%;
   display: flex;
   justify-content: center;
   flex-direction: column;
   align-items: center;
-  margin-top: 55px 
+  margin-top: 55px;
+  height: 83vh;
 }
 
 .side-image {
-  width: 80%;
   height: auto;
   border-radius: 4px;
   justify-content: center;
   width: 60%;
-}
-
-.date-divider {
-  font-size: 13px;
-  display: flex;
-  justify-content: center;
-  font-weight: 400;
-  align-items: center;
-  margin: 10px 0px;
-}
-
-.date-divider::before, .date-divider::after {
-  flex: 1;
-  content: '';
-  padding: .6px;
-  background: #000;
-  background-color: rgb(165, 163, 163);
-  margin: 5px;
-}
-
-.date-divider span {
-  padding: 0 10px;
-  background-color: rgb(73, 72, 72);
-  color: #fff;
-  border-radius: 4px;
-
 }
 
 /* .select-input {
@@ -93,14 +73,22 @@
   display:flex;
   flex-direction: row;
   align-items: center;
-
-
-.select-input {
-  width: 99%;
 }
 
-.submit-button{
-  width: 99%;
+.mb-3{
+  margin: 10px;
+  width: 85% !important;
+}
+
+.mb-3.error {
+  border: 1px solid red !important; 
+  border-radius: 4px !important;
+} 
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
 }
 
 @media (max-width: 1000px) {
@@ -142,7 +130,4 @@
     flex-direction: column;
   }
 
-  .select-input{
-    width: 95%;
-  }
 }

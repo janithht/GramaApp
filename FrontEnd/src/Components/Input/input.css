@@ -1,10 +1,10 @@
 .custom-input {
-  padding: 15px;
+  padding: 10px;
   margin: 10px;
   border: 1px solid #ddd;
   border-radius: 8px;
   transition: border-color 0.3s ease;
-  width: 95%;
+  width: 85% !important;
 }
 
 .custom-input:focus {
@@ -18,9 +18,9 @@
   outline: none;
 }
 
-.custom-input select {
-  border-radius: 0;
-  width: 90%;
+.select-input {
+  border-radius: 8px;
+  width: 95% ;
 }
 .date-divider {
   font-size: 12px;
