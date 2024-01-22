@@ -17,24 +17,18 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  // CSpinner,
+  CSpinner,
 } from "@coreui/react";
-import { getToken } from "../../Utils/getToken.js";
 
 const Dashboard = () => {
   const navigate = useNavigate();
-  const [message, setMessage] = useState("");
+  const [message, setMessage] = useState("Type your message here...");
   const [visible, setVisible] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   // const [loading, setLoading] = useState(false);
-  const [token, setToken] = useState("");
-
-  const handleToken = async () => {
-    const token = await getToken();
-    setToken(token);
-  };
 
   useEffect(() => {
+
     setMessage("");
     // handleToken();
     // if (token !== "") {
@@ -74,52 +68,44 @@ const Dashboard = () => {
               } else {
                 date += "th";
               }
-            } else {
-              date = "Today";
-            }
-            setChatHistory((prev) => [
-              ...prev,
-              {
-                user: chat.user,
-                message: chat.message,
-                timestamp: formatted,
-                time_only,
-                date,
-              },
-            ]);
-          });
-          // setLoading(false);
-        })
-        .catch((err) => {
-          console.log(err);
+          } else {
+            date = "Today";
+          }
+          setChatHistory((prev) => [
+            ...prev,
+            {
+              user: chat.user,
+              message: chat.message,
+              timestamp: formatted,
+              time_only,
+              date,
+            },
+          ]);
         });
-    // }
+        // setLoading(false);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   }, [visible]);
 
   const handleSendMessage = () => {
-    // if (token !== "") {
-      axios
-        .post(
-          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
-          // {
-          //   headers: {
-          //     Accept: "application/scim+json",
-          //     Authorization: `Bearer ${token}`,
-          //   },
-          // }
-        )
-        .then((res) => setVisible(false))
-        .catch((err) => {
-          console.log("error:", err);
-        });
-    // }
+    axios
+      .post(
+        "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=" +
+          message
+      )
+      .then((res) => setVisible(false))
+      .catch((err) => {
+        console.log("error:", err);
+      });
   };
 
   return (
     // loading ?
-    <div className="full-container">
-      <div className="menubar-container">
-      <MenuBar />
+    <div>
+      <div className="container">
+        <MenuBar />
       </div>
       <div className="main-container">
         <p className="welcome-heading">Welcome to Grama Check!</p>
@@ -129,7 +115,7 @@ const Dashboard = () => {
             image={applyCertificate}
             onClick={() => navigate("/application")}
           />
-          <Tile text="Check the Status" image={statusCheck} onClick={() => navigate("/statuscheck")}/>
+          <Tile text="Check the Status" image={statusCheck} />
           <div className="dashboard-tile" onClick={() => setVisible(!visible)}>
             <div className="tile-content">
               <div className="tile-image">
