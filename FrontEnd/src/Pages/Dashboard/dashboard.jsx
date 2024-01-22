@@ -116,19 +116,19 @@ const Dashboard = () => {
 
   return (
     // loading ?
-    <div>
-      <div className="container">
-        <MenuBar />
+    <div className="full-container">
+      <div className="menubar-container">
+      <MenuBar />
       </div>
       <div className="main-container">
-        {/* <p className="welcome-heading">Welcome to Grama Check!</p> */}
+        <p className="welcome-heading">Welcome to Grama Check!</p>
         <div className="menu-container">
           <Tile
             text="Apply for Certificate"
             image={applyCertificate}
             onClick={() => navigate("/application")}
           />
-          <Tile text="Check the Status" image={statusCheck} />
+          <Tile text="Check the Status" image={statusCheck} onClick={() => navigate("/statuscheck")}/>
           <div className="dashboard-tile" onClick={() => setVisible(!visible)}>
             <div className="tile-content">
               <div className="tile-image">
