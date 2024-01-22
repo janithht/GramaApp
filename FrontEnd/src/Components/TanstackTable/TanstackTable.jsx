@@ -112,7 +112,22 @@ const TanstackTable =() =>{
     })
   };
 
+
+
+
   const handleClickNotify = (index)=>{
+
+    axios.put(
+        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/updateStatus?requestId=${filteredData[index].req_id}`,
+    )
+        .then((res) => {
+            // Handle the response if needed
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+    
+
     let msg=`            Your Grama Certificate is ready !!              We are pleased to inform you (NIC - ${filteredData[index].NIC}) that your GRAMA certificate has been successfully read and verified! You can now pick up your original certificate in person at our office.`
     axios.post(
         'https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/sms-service/smsservice-928/v1.0/send_message',
