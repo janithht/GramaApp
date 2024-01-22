@@ -8,7 +8,6 @@ export const getToken = async () => {
   
     const tokenEndpoint = `https://sts.choreo.dev/oauth2/token`;
     // "https://api.asgardeo.io/t/interns/oauth2/token";
-  
     const headers = new Headers({
       "Content-Type": "application/x-www-form-urlencoded",
       Authorization: `Basic ${btoa(`${clientID}:${clientSecret}`)}`,
