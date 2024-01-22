@@ -1,4 +1,4 @@
-.custom-button {
+/* .custom-button {
   width: fit-content;
   background-color: #A05B9D; 
   border: 1px solid #ddd;
@@ -16,24 +16,35 @@
 }
 
 .custom-button:hover {
-  background-color: #ac34a6; /* Change color on hover */
+  background-color: #ac34a6;
 }
 
-/* Additional Styles to Reset Anchor Styles */
+
 .custom-button,
 .custom-button:hover,
 .custom-button:active,
 .custom-button:visited {
   text-decoration: none;
-  color: #fff; /* Text color */
+  color: #fff; 
 }
 
-/* Media Query for Mobile Responsive */
+
 @media (max-width: 1000px) {
   .custom-button {
-    /* max-width: calc(50% - 50px); */
-    /* width: 100%; */
     height: auto; 
     box-sizing: border-box;
   }
+} */
+
+.custom-button {
+  background-color:  hsl(291, 47%, 60%) !important; 
+  border: none !important;
+  margin: 10px;
+  width: 85%;
+  padding: 10px !important;
+  
+}
+
+.custom-button:hover {
+  background-color: #A05B9D !important;
 }
