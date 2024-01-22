@@ -4,6 +4,8 @@ import "../../Components/MenuBar/menubar.css";
 import applyCertificate from "../../Assets/Apply.png";
 import statusCheck from "../../Assets/Status.png";
 import help from "../../Assets/Help.png";
+import Avatar from "../../Assets/Avatar.webp";
+import G_Logo from "../../Assets/G_Logo.png";
 import "./dashboard.css";
 import Tile from "../../Components/Tile/tile.jsx";
 import axios from "axios";
@@ -17,7 +19,7 @@ import {
   CModalFooter,
   CModalHeader,
   CModalTitle,
-  // CSpinner,
+  CSpinner,
 } from "@coreui/react";
 import { getToken } from "../../Utils/getToken.js";
 
@@ -26,7 +28,7 @@ const Dashboard = () => {
   const [message, setMessage] = useState("");
   const [visible, setVisible] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
-  // const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
 
   const handleToken = async () => {
@@ -88,7 +90,7 @@ const Dashboard = () => {
               },
             ]);
           });
-          // setLoading(false);
+          setLoading(true);
         })
         .catch((err) => {
           console.log(err);
@@ -97,10 +99,12 @@ const Dashboard = () => {
   }, [visible]);
 
   const handleSendMessage = () => {
-    if (token === "") {
+    handleToken();
+    if (token !== "") {
       axios
         .post(
           `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`, 
+          {},
           {
             headers: {
               Accept: "application/scim+json",
@@ -149,7 +153,7 @@ const Dashboard = () => {
                 Grama Support
               </CModalTitle>
             </CModalHeader>
-            <CModalBody>
+            {loading?<CModalBody>
               {chatHistory?.map((chat, index) => {
                 return (
                   <span key={index}>
@@ -173,7 +177,7 @@ const Dashboard = () => {
                           </p>
                         </div>
                         <img
-                          src="https://firebasestorage.googleapis.com/v0/b/web-login-7e719.appspot.com/o/log4.png?alt=media&token=6fcb1e62-ecda-4da2-8b65-bce92fc187d8"
+                        src={G_Logo}
                           alt="avatar"
                           className="chat-avatar"
                         />
@@ -181,7 +185,7 @@ const Dashboard = () => {
                     ) : (
                       <div className="ask-for-help-chat-left">
                         <img
-                          src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OHx8YXZhdGFyfGVufDB8fDB8fHww"
+                        src={Avatar}
                           alt="avatar"
                           className="chat-avatar"
                         />
@@ -201,7 +205,12 @@ const Dashboard = () => {
                   </span>
                 );
               })}
-            </CModalBody>
+            </CModalBody>:
+            <CModalBody>
+              <div className="loading-spinner d-flex justify-content-center">
+                <CSpinner color="primary" />
+              </div>
+            </CModalBody>}
             <CModalFooter className=" chat-message-send">
               <input
                 type="text"
