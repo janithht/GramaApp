@@ -6,6 +6,9 @@ import AdminDashboard from "./Pages/AdminDashboard/adminDashboard.jsx";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
  {/*import StatusChecks from "./Pages/StatusChecks/statuschecks.jsx";*/}
 
+// import StatusChecks from "./Pages/StatusChecks/statuschecks.jsx";
+
+
 function App() {
 
   return (
@@ -15,8 +18,8 @@ function App() {
           <Route path="/" element={<Landing />} />
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/application" element={<Application />} />
-         {/* <Route path="/statuscheck" element={<StatusChecks />} /> */}
-          <Route path="/grama-dashboard" element={<GramaDashboard />} />          
+          {/* <Route path="/statuscheck" element={<StatusChecks />} /> */}
+          <Route path="/grama-dashboard" element={<AdminDashboard />} />         
         </Routes>
       </Router>
     </div>

@@ -45,7 +45,55 @@
   height: auto;
   border-radius: 4px;
   justify-content: center;
+  width: 60%;
 }
+
+.date-divider {
+  font-size: 13px;
+  display: flex;
+  justify-content: center;
+  font-weight: 400;
+  align-items: center;
+  margin: 10px 0px;
+}
+
+.date-divider::before, .date-divider::after {
+  flex: 1;
+  content: '';
+  padding: .6px;
+  background: #000;
+  background-color: rgb(165, 163, 163);
+  margin: 5px;
+}
+
+.date-divider span {
+  padding: 0 10px;
+  background-color: rgb(73, 72, 72);
+  color: #fff;
+  border-radius: 4px;
+
+}
+
+/* .select-input {
+  width: 85%;
+} */
+
+/* .text-input{
+  width:85%;
+} */
+
+
+.error-message {
+  color: red;
+  font-size: 12px;
+  margin-top: 5px;
+}
+
+.input-field-div{
+  display:flex;
+  flex-direction: row;
+  align-items: center;
+
 
 .select-input {
   width: 99%;
