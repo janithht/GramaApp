@@ -1,4 +1,3 @@
-// 
 import React, { useState } from 'react';
 import MenuBar from '../../Components/MenuBar/menubar.jsx';
 import "./application.css";

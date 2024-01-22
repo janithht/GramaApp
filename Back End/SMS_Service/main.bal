@@ -6,6 +6,11 @@ configurable string authToken = ?;
 const string fromMobile = "+19152137635";
 
 
+public type Response record {
+    string phoneNo;
+    string message;
+};
+
 twilio:ConnectionConfig twilioConfig = {
 auth: {
 username: accountSid,
