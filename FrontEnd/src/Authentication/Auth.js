@@ -1,27 +1,24 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useAuthContext } from "@asgardeo/auth-react";
-import Landing from "../Pages/Landing/landing";
-import Dashboard from "../Pages/Dashboard/dashboard";
 
 function Auth() {
-  const { state, signIn, signOut } = useAuthContext();
+  const {state,getBasicUserInfo } = useAuthContext() || {};
+  const [userDetails, setUserDetails] = useState();
+  
+  useEffect(() => {
+    console.log("state:",state);
+    state?.isAuthenticated &&
+    getBasicUserInfo().then((response) => {
+      setUserDetails(response);
+    });
+  }, [getBasicUserInfo, state?.isAuthenticated]);
 
-  return (
-    <div className="App">
-      {state.isAuthenticated ? (
-        <Dashboard />
-        // <div>
-        //   <ul>
-        //     <li>{state.username}</li>
-        //   </ul>
-
-        //   <button onClick={() => signOut()}>Logout</button>
-        // </div>
-      ) : (
-        <Landing />
-        // <button onClick={() => signIn()}>Login</button>
-      )}
-    </div>
+  return state?.isAuthenticated  ? (
+    userDetails?.groups?.includes("grama_officer") ? 
+    (window.location.href = "/grama-dashboard"):
+    (window.location.href = "/dashboard")
+  ) : (
+   window.location.href = "/landing"
   );
 }
 
