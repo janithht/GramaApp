@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import MenuBar from '../../Components/MenuBar/menubar';
 import './statuschecks.css'; 
-import { FaChevronDown, FaChevronUp, FaCheck, FaTimes } from 'react-icons/fa';
-import { IoCheckmarkCircleSharp , IoCloseCircle } from 'react-icons/io5';
+import { FaChevronDown, FaChevronUp} from 'react-icons/fa';
 import statusCheck from "../../Assets/Status.png";
 import axios from 'axios';
 import { useAuthContext } from "@asgardeo/auth-react";
@@ -18,7 +17,9 @@ const StatusChecks = () => {
       const fetchData = async () => {
         try {
           const response = await axios.get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/getUserRequest?email=${state.email}`);
-          setData(response.data);
+          const sortedData = response.data.sort((a, b) => b.req_id - a.req_id);
+          setData(sortedData);
+          console.log(response);
         } catch (error) {
           console.error('Error fetching data:', error);
         }
@@ -64,11 +65,12 @@ const StatusChecks = () => {
             <table>
               <thead>
                 <tr>
-                  <td>Request ID</td>
+                  <td>Tracking ID</td>
                   <td>NIC</td>
                   {/* <td>Email</td> */}
-                  <td>Telephone</td>
+                  {/* <td>Telephone</td> */}
                   <td>Status</td>
+                  <td>Date Submitted</td>
                   <td>Details</td>
                 </tr>
               </thead>
@@ -79,13 +81,13 @@ const StatusChecks = () => {
                     <tr>
                       <td>{rowData.req_id}</td>
                       <td>{rowData.NIC}</td>
-                      {/* <td>{rowData.email}</td> */}
-                      <td>{rowData.phoneNo}</td>
                       <td>
                         <span className={`status-badge ${rowData.status === 1 ? 'status-approved' : (rowData.status === 2 ? 'status-rejected' : 'status-completed')}`}>
                             {getStatusText(rowData.status)}
                         </span>
                       </td>
+
+                      <td>{rowData.date_submitted}</td>
                       
                       <td>
                         <span
@@ -101,15 +103,11 @@ const StatusChecks = () => {
                       <tr className="expanded-row">
                         <td colSpan="6">
                           <div className="expanded-row-div">
-                            <p>
-                              Police Check: {rowData.police_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" />}
-                            </p>
-                            <p>
-                              Address Check: {rowData.address_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" /> }
-                            </p>
-                            <p>
-                              Identity Check: {rowData.identity_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" />}
-                            </p>
+                            <span>Date Submitted : {rowData.date_submitted}</span>
+                            <span>Tracking ID : {rowData.req_id}</span>
+                            <span>National Identity Card Number : {rowData.NIC} <span className={rowData.identity_check ? 'incorrect-text' : 'approved-text'}>{rowData.identity_check ? "Incorrect" : "Approved"}</span></span>
+                            <span>Address : {rowData.no}, {rowData.street1}, {rowData.street2}, {rowData.city}, {rowData.postalcode} <span className={rowData.address_check ? 'incorrect-text' : 'approved-text'}>{rowData.address_check ? "Incorrect" : "Approved"}</span> </span>
+                            <span>Police Records : <span className={rowData.police_check ? 'incorrect-text' : 'approved-text'}>{rowData.police_check ? "Rejected" : "Approved"}</span></span>               
                           </div>
                         </td>
                       </tr>

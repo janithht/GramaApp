@@ -1,7 +1,17 @@
-import React from 'react';
+import React , {useState} from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import CustomButton from '../../Components/CustomButton/custombutton';
+import Select from 'react-select';
+
 const ApplicationForm = ({ formik }) => {
+
+const [selectedGramaSevaDivision, setSelectedGramaSevaDivision] = useState(null);
+const gramaSevaDivisionOptions = [
+    { value: 'division1', label: 'Division 1' },
+    { value: 'division2', label: 'Division 2' },
+    // Add more divisions as needed
+];
+
   return (
 
         <form className='application-form' onSubmit={formik.handleSubmit}>
@@ -140,7 +150,7 @@ const ApplicationForm = ({ formik }) => {
 
             <div className="input-field-div">
               <InputGroup className={`mb-3`}>
-                <InputGroup.Text id="gramaSevaDivision-label">Grama Seva Division</InputGroup.Text>
+                {/* <InputGroup.Text id="gramaSevaDivision-label">Grama Seva Division</InputGroup.Text>
                 <Form.Control
                   type="text"
                   id="gramaSevaDivision"
@@ -150,7 +160,21 @@ const ApplicationForm = ({ formik }) => {
                   onBlur={formik.handleBlur}
                   aria-label="Grama Seva Division"
                   aria-describedby="gramaSevaDivision-label"
-                />
+                /> */}
+                {/* <InputGroup.Text id="gramaSevaDivision-label" className="select-lable">Grama Seva Division</InputGroup.Text> */}
+              <Select
+                id="gramaSevaDivision"
+                name="gramaSevaDivision"
+                value={selectedGramaSevaDivision}
+                onChange={(selectedOption) => {
+                  formik.setFieldValue('gramaSevaDivision', selectedOption ? selectedOption.value : '');
+                  setSelectedGramaSevaDivision(selectedOption);
+                }}
+                options={gramaSevaDivisionOptions}
+                isSearchable
+                placeholder="Select Grama Seva Division"
+                className="select-field"
+              />
               </InputGroup>
               {formik.touched.gramaSevaDivision && formik.errors.gramaSevaDivision && (
                 <div className="error-message">{formik.errors.gramaSevaDivision}</div>

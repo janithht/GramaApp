@@ -92,6 +92,17 @@
   display: none; /* Hide the error message for valid input */
 }
 
+.select-field{
+  display: block;
+  width: 100%;
+  border-bottom-left-radius: 0;
+  border-top-left-radius: 0;
+}
+
+/* .select-lable {
+  
+} */
+
 @media (max-width: 1000px) {
   .main-form-container {
     flex-direction: column;
@@ -131,4 +142,16 @@
     flex-direction: column;
   }
 
+}
+
+@media (max-width: 767px) {
+  .select-lable {
+    width: 100%;
+    display: block;
+    /* margin-bottom: 0px; */
+  }
+
+  .select-field {
+    width: 100%;
+  }
 }
