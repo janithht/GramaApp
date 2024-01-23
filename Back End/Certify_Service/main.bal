@@ -49,6 +49,11 @@ public type Request record{|
     readonly int address_check;
     readonly int police_check;
     readonly int status;
+    string no;
+    string street1;
+    string street2;
+    string city;
+    string postalcode;
     readonly string date_submitted;
 |};
 
@@ -92,8 +97,8 @@ function addCertificateRequest(NewRequest req) returns int|error {
 
     // insert certificate request to database with police_check value
     sql:ExecutionResult result = check certifyDb->execute(`
-        INSERT INTO certificaterequest (division_id, NIC, email, phoneNo, id_check, address_check, police_check, status,date_submitted)
-        VALUES (${req.division_id},${req.NIC}, ${req.email},${req.phoneNo} ,${exist_Id}, ${address_check}, ${police_check}, ${request_status},${date})`);
+        INSERT INTO certificaterequest (division_id, NIC, email, phoneNo, id_check, address_check, police_check, status,no,street1,street2,city,postalcode,date_submitted)
+        VALUES (${req.division_id},${req.NIC}, ${req.email},${req.phoneNo} ,${exist_Id}, ${address_check}, ${police_check}, ${request_status},${req.no},${req.street1},${req.street2},${req.city},${req.postalcode},${date})`);
     int|string? lastInsertId = result.lastInsertId;
     if lastInsertId is int {
         //update Status
