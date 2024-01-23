@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import CircleLoader from "react-spinners/CircleLoader";
 import './TanstackTable.css'
 import Swal from 'sweetalert2'
+import Form from 'react-bootstrap/Form';
 
 
 
@@ -17,7 +18,7 @@ const handleClickMore = (row)=>{
    
             Swal.fire({
               
-                width:800,
+                width:980,
                 html: `
                  <p>Criminal Record Infomation</p>
                 <table>${formatTableFromJson(res.data.userCriminalRecords)}</table> `,
@@ -266,16 +267,18 @@ const TanstackTable =() =>{
 
 
     return(
-        <>
-        <div className="searchBar" >
-        <input id="searchQueryInput" placeholder="Search" type="text" onChange={onSearch} />
-       
-        <select value={selectedGramaDivision} onChange={handleGramaDivisionChange}>
-          <option value="">All Divisions</option>
-          <option value="1">Division 1</option>
-          <option value="84">Division 84</option>
-          {/* Add more options based on your data */}
-        </select>
+        <> 
+
+    <div className="searchBar" >
+    <Form.Group className="mb-3" >
+    <Form.Control type="text" className="w-25"  id="searchQueryInput" placeholder="Search by NIC" onChange={onSearch}  />
+    </Form.Group>
+
+      <Form.Select aria-label="Default select example" className="w-25 h-25"   value={selectedGramaDivision} onChange={handleGramaDivisionChange}>
+      <option value="">All Divisions</option>
+      <option value="1">Division 1</option>
+      <option value="84">Division 84</option>
+      </Form.Select>
        
         </div>
 
