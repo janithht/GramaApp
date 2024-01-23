@@ -17,6 +17,13 @@ public type Citizen record{|
     string postalcode;
 |};
 
+public type GramaDivisions record{
+    @sql:Column{name: "divisionId"}
+    int division_id;
+    @sql:Column{name: "divisionName"}
+    string div_name;
+};
+
 configurable string HOST = ?;
 configurable string USER = ?;
 configurable string PASSWORD = ?;
@@ -58,4 +65,19 @@ service /addressCheck on new http:Listener(9092) {
         return 1;
     }
 }
+
+service /gramasevaDivision on new http:Listener(9093) {
+    resource function get allGramasevaDivisions() returns GramaDivisions[]|error {
+
+        GramaDivisions[] gramaDivisions=[];
+        stream<GramaDivisions, sql:Error?> query = nationalDb->query(`Select divisionId, divisionName from grama_division_information`);
+        check from GramaDivisions req in query
+            do {
+                gramaDivisions.push(req);
+            };
+        check query.close();
+        return gramaDivisions;
+    }
+}
+
 
