@@ -1,10 +1,10 @@
 export const getToken = async () => {
   const orgName = "interns";
-  const clientID = "2SBX8j5UfdjnBqU_ZP88Alrpmv4a";
-  const clientSecret = "ptX7EqRN_1TATpY0KytXsw16A_RlNI3sMkd1aT_QwdYa";
+  const clientID = "Ae9Jg4gE5j0VPPjHBnRm0Q7jZfga";
+  const clientSecret = "szaZwVsAn18mswGPf6JPUGfAZ8Qa";
   const scope = "openid address email groups phone profile roles";
 
-  const tokenEndpoint = `https://api.asgardeo.io/t/${orgName}/oauth2/token`;
+  const tokenEndpoint = "https://sts.choreo.dev/oauth2/token";
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: `Basic ${btoa(`${clientID}:${clientSecret}`)}`,
