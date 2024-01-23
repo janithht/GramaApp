@@ -131,3 +131,17 @@
     color: #0f5164; 
     border: 1px solid #59a6c1;
   }
+
+  @media (max-width: 767px) {
+    .status-image {
+      display: none; /* Hide the status image on mobile screens */
+    }
+  
+    .info-container {
+      width: 100%; /* Adjust the width to 100% on mobile screens */
+    }
+  
+    table {
+      width: 100%; /* Make the table full-width on mobile screens */
+    }
+  }

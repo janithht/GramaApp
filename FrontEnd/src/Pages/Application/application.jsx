@@ -53,7 +53,7 @@ const Application = () => {
           NIC: values.nic,
           city: values.city,
           division_id: parseInt(values.gramaSevaDivision, 10), 
-          email: "hello@123.com",
+          email: userEmail,
           no: values.addressNumber,
           phoneNo: formattedPhoneNumber,
           postalcode: values.postalcode,

@@ -36,9 +36,9 @@ const StatusChecks = () => {
     const getStatusText = (status) => {
         switch (status) {
           case 1:
-            return 'Rejected';
-          case 2:
             return 'Approved';
+          case 2:
+            return 'Rejected';
           case 3:
             return 'Completed';
           default:
@@ -64,7 +64,7 @@ const StatusChecks = () => {
                 <tr>
                   <td>Request ID</td>
                   <td>NIC</td>
-                  <td>Email</td>
+                  {/* <td>Email</td> */}
                   <td>Telephone</td>
                   <td>Status</td>
                   <td>Details</td>
@@ -77,9 +77,8 @@ const StatusChecks = () => {
                     <tr>
                       <td>{rowData.req_id}</td>
                       <td>{rowData.NIC}</td>
-                      <td>{rowData.email}</td>
+                      {/* <td>{rowData.email}</td> */}
                       <td>{rowData.phoneNo}</td>
-                      {/* <td>{getStatusText(rowData.status)}</td> */}
                       <td>
                         <span className={`status-badge ${rowData.status === 1 ? 'status-rejected' : (rowData.status === 2 ? 'status-approved' : 'status-completed')}`}>
                             {getStatusText(rowData.status)}
