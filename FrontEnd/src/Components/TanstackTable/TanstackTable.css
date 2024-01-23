@@ -1,6 +1,6 @@
   .tick, .cross{
     width: 25px;
-    margin-left: 10px;
+    /* margin-left: 10px; */
   }
 
 
@@ -54,4 +54,13 @@
     cursor: pointer;
   }
 
-
+div .data-table-image{
+  /* display: flex !important;
+  justify-content: center !important; */
+  margin-right: 50px;
+}
+.data-table-image{
+  display: flex !important;
+  justify-content: center !important;
+  margin-left: 20px;
+}

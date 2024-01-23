@@ -7,10 +7,6 @@ import './TanstackTable.css'
 import Swal from 'sweetalert2'
 
 
-// const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-
-
-
 
 const handleClickMore = (row)=>{
 
@@ -18,19 +14,13 @@ const handleClickMore = (row)=>{
     .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
     .then(
         (res)=>{
-            //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
-           //console.log(res.data.userCriminalRecords[0]
-           console.log("123***");
-           console.log(res.data.userCriminalRecords);
-            console.log("789***");
-
-
+   
             Swal.fire({
-                title: "Criminal Record Info",
-                width:1000,
-                html: `<table>${formatTableFromJson(res.data.userCriminalRecords)}</table>`,
-             
-            
+              
+                width:800,
+                html: `
+                 <p>Criminal Record Infomation</p>
+                <table>${formatTableFromJson(res.data.userCriminalRecords)}</table> `,
             });
         
 
@@ -43,13 +33,13 @@ const handleClickMore = (row)=>{
         let tableRows = '';
       
         // Define keys to omit
-        const keysToOmit = ['severity', 'id'];
+        const keysToOmit = ['severityLevel', ''];
       
         // Create header row
         tableRows += '<tr style="background-color: #f2f2f2;">';
         for (const key in jsonData[0]) {
           if (jsonData[0].hasOwnProperty(key) && !keysToOmit.includes(key)) {
-            tableRows += `<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${key}</th>`;
+            tableRows += `<th style="border: 1px solid #ddd; padding: 8px; text-align: left; font-size : 12px ">${key}</th>`;
           }
         }
         tableRows += '</tr>';
@@ -60,12 +50,11 @@ const handleClickMore = (row)=>{
           for (const key in record) {
             if (record.hasOwnProperty(key) && !keysToOmit.includes(key)) {
               const cellValue = key === 'convictionDate' ? formatDate(record[key]) : record[key];
-              tableRows += `<td style="border: 1px solid #ddd; padding: 8px; text-align: left;">${cellValue}</td>`;
+              tableRows += `<td style="border: 1px solid #ddd; padding: 8px; text-align: left; font-size : 12px">${cellValue}</td>`;
             }
           }
           tableRows += '</tr>';
-        });
-      
+        });   
         return tableRows;
       }
       
@@ -75,40 +64,6 @@ const handleClickMore = (row)=>{
         return formattedDate;
       }
 
-
-
-
-    function formatTableFromJson2(jsonData) {
-        let tableRows = '';
-      
-        // Define keys to omit
-        const keysToOmit = ['severityLevel'];
-      
-        // Create header row
-        tableRows += '<tr style="background-color: #f2f2f2;">';
-        for (const key in jsonData[0]) {
-          if (jsonData[0].hasOwnProperty(key) && !keysToOmit.includes(key)) {
-            tableRows += `<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${key}</th>`;
-          }
-        }
-        tableRows += '</tr>';
-      
-        // Create data rows
-        jsonData.forEach((record, index) => {
-          tableRows += `<tr${index % 2 === 0 ? ' style="background-color: #f9f9f9;"' : ''}>`;
-          for (const key in record) {
-            if (record.hasOwnProperty(key) && !keysToOmit.includes(key)) {
-              tableRows += `<td style="border: 1px solid #ddd; padding: 8px; text-align: left;">${record[key]}</td>`;
-            }
-          }
-          tableRows += '</tr>';
-        });
-      
-        return tableRows;
-      }
-      
-
-
 }
 
 const TanstackTable =() =>{
@@ -116,55 +71,70 @@ const TanstackTable =() =>{
     const [data, setData] = useState([]);
     const [filteredData,setFilteredData]=useState([])
 
-    const [expandedRows, setExpandedRows] = useState([]);
+    // const [expandedRows, setExpandedRows] = useState([]);
 
     const columns = [
         {
             name: 'RequestID',
             selector: row => row.req_id,
+            width: "7%"
         },
         {
-            name: `Division ID .`,
+            name: `DivisionID`,
             selector: row => row.division_id,
+            width: "7%"
         },
         {
             name: `Requester's NIC`,
             selector: row => row.NIC,
+            width: "10%"
+
         },
         {
-            name: `Requester's Phone Number`,
+            name: `Email`,
+            selector: row => row.email,
+            width: "15%"
+        },
+        {
+            name: `Contact Number`,
             selector: row => row.phoneNo,
+            width: "10%"
         },
         {
             name: 'Identity Check',
-            selector: row => row.Id_check,
+            selector: row => row.Id_check, 
+            width: "8%",
             cell: row => (
                 row.Id_check > 0  
-                    ? <img  className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Identity check failed img" />
-                    : <img  className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Identity check passed img" />
+                    ?  <span className="data-table-image"><img  className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Identity check failed img" /></span>
+                    :<span className="data-table-image"> <img  className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Identity check passed img" /></span>
             ),
         },
         {
             name: 'Address Check',
             selector: row => row.address_check,
+            width: "8.5%",
             cell: row => (
                 row.address_check> 0 
-                    ? <img className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Address check failed img" />
-                    : <img className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Address check passed img" />
+                    ?<span className="data-table-image"><img className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Address check failed img" /></span>
+                    : <span className="data-table-image"><img className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Address check passed img" /></span>
             ),
         },
         {
             name: 'Police Check',
             selector: row =>row.police_check,
+            width: "8%",
             cell: row => (
                 row.police_check > 0   
-                    ? <img className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Police check failed img" />
-                    : <img className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Police check passed img" />
+                    ? 
+                    <span className="data-table-image"> <img className="cross" src="https://cdn-icons-png.flaticon.com/128/1828/1828843.png" alt="Police check failed img" /></span>
+                    :<span className="data-table-image"><img className="tick" src="https://cdn-icons-png.flaticon.com/128/190/190411.png" alt="Police check passed img" /></span>
             ),
         },
         {
             name: 'Status',
             selector: row => row.status,
+            width: "10%",
             cell: row => (
                 row.status === 3
                     ? <p>Nottified</p>
@@ -179,49 +149,28 @@ const TanstackTable =() =>{
             cell: (row,index) => (
                 row.status === 1
                     ? <button className="table-button" onClick={()=> handleClickNotify(index)} >Notify</button>
-                    : row.status == 2
-                        ? <><button className="table-button" onClick={()=> handleClickMore(row)} >expand</button></>
+                    : row.status === 2
+                        ? <><button className="table-button" onClick={()=> handleClickMore(row)} >Details</button></>
                         :<></>
             ),
         },
     ];
-
-  const handleExpandRow = (row) => {
-    console.log("***")
-   
-    let temp=filteredData
-    axios
-    .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
-    .then(
-        (res)=>{
-            //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
-           //console.log(res.data.userCriminalRecords[0])
-            temp[row.index].userCriminalRecords=res.data.userCriminalRecords;
-            setFilteredData(temp)
-            console.log(filteredData)
-           
-        }
-    ).catch((err)=>{
-        console.log(err)
-    })
-  };
-
-
- const expandableRowsComponent= (data) => <pre><b>{JSON.stringify(data, null, 2)}</b></pre>
-
-
 
 
 
   const handleClickNotify = (index)=>{
 
     axios.put(
-        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/updateStatus?requestId=${filteredData[index].NIC}`,
+        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/updateStatus?requestId=${filteredData[index].req_id}`,
     
     )
         .then((res) => {
             // Handle the response if needed
+            const updatedData = [...filteredData];
+            updatedData[index].status = 3; // Assuming 3 represents 'Notified'
+            setFilteredData(updatedData);
         })
+        
         .catch((err) => {
             console.error(err);
         });
@@ -263,8 +212,6 @@ const TanstackTable =() =>{
 
 
 
-
-
   useEffect(() => {
     setLoading(true);
     axios
@@ -293,8 +240,6 @@ const TanstackTable =() =>{
         setFilteredData(temp)
     }
 
-    
-
 
     return(
         <>
@@ -305,12 +250,10 @@ const TanstackTable =() =>{
         <DataTable 
             data={filteredData} 
             columns={columns} 
+            responsive ={true}
             progressPending={isLoading} 
             progressComponent={<CircleLoader color="#36d7b7" />}
             pagination={true}
-            // expandableRows={true}
-            // onRowExpandToggled={(status,row)=>handleExpandRow(row)}
-            // expandableRowsComponent={expandableRowsComponent}
            
         />
         </>
