@@ -5,6 +5,7 @@ import DataTable from "react-data-table-component";
 import CircleLoader from "react-spinners/CircleLoader";
 import './TanstackTable.css'
 import Swal from 'sweetalert2'
+import Form from 'react-bootstrap/Form';
 
 
 
@@ -17,7 +18,7 @@ const handleClickMore = (row)=>{
    
             Swal.fire({
               
-                width:800,
+                width:980,
                 html: `
                  <p>Criminal Record Infomation</p>
                 <table>${formatTableFromJson(res.data.userCriminalRecords)}</table> `,
@@ -70,6 +71,7 @@ const TanstackTable =() =>{
     const [isLoading,setLoading]=useState(true);
     const [data, setData] = useState([]);
     const [filteredData,setFilteredData]=useState([])
+    const [selectedGramaDivision, setSelectedGramaDivision] = useState('');
 
     // const [expandedRows, setExpandedRows] = useState([]);
 
@@ -234,6 +236,12 @@ const TanstackTable =() =>{
 
     const onSearch=(event)=>{
         let temp= data.filter((row)=>row.NIC.includes(event.target.value))
+      
+        // Filter by selected Grama division, if any
+        if (selectedGramaDivision) {
+        temp = temp.filter((row) => row.division_id === selectedGramaDivision);
+  }
+
         temp.forEach((row,index)=>{
             row.index=index;
         })
@@ -241,10 +249,37 @@ const TanstackTable =() =>{
     }
 
 
+    const handleGramaDivisionChange = (event) => {
+        const selectedDivision = event.target.value;
+        setSelectedGramaDivision(selectedDivision);
+    
+        // Filter data based on the selected Grama division
+        let temp = data;
+        if (selectedDivision) {
+          temp = temp.filter((row) => row.division_id == selectedDivision);
+        }
+    
+        temp.forEach((row, index) => {
+          row.index = index;
+        });
+        setFilteredData(temp);
+      };
+
+
     return(
-        <>
-        <div className="searchBar" >
-        <input id="searchQueryInput" placeholder="Search" type="text" onChange={onSearch} />
+        <> 
+
+    <div className="searchBar" >
+    <Form.Group className="mb-3" >
+    <Form.Control type="text" className="w-25"  id="searchQueryInput" placeholder="Search by NIC" onChange={onSearch}  />
+    </Form.Group>
+
+      <Form.Select aria-label="Default select example" className="w-25 h-25"   value={selectedGramaDivision} onChange={handleGramaDivisionChange}>
+      <option value="">All Divisions</option>
+      <option value="1">Division 1</option>
+      <option value="84">Division 84</option>
+      </Form.Select>
+       
         </div>
 
         <DataTable 
