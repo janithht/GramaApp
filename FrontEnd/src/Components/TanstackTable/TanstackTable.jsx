@@ -7,10 +7,6 @@ import './TanstackTable.css'
 import Swal from 'sweetalert2'
 
 
-// const ExpandedComponent = ({ data }) => <pre>{JSON.stringify(data, null, 2)}</pre>;
-
-
-
 
 const handleClickMore = (row)=>{
 
@@ -78,34 +74,34 @@ const handleClickMore = (row)=>{
 
 
 
-    function formatTableFromJson2(jsonData) {
-        let tableRows = '';
+    // function formatTableFromJson2(jsonData) {
+    //     let tableRows = '';
       
-        // Define keys to omit
-        const keysToOmit = ['severityLevel'];
+    //     // Define keys to omit
+    //     const keysToOmit = ['severityLevel'];
       
-        // Create header row
-        tableRows += '<tr style="background-color: #f2f2f2;">';
-        for (const key in jsonData[0]) {
-          if (jsonData[0].hasOwnProperty(key) && !keysToOmit.includes(key)) {
-            tableRows += `<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${key}</th>`;
-          }
-        }
-        tableRows += '</tr>';
+    //     // Create header row
+    //     tableRows += '<tr style="background-color: #f2f2f2;">';
+    //     for (const key in jsonData[0]) {
+    //       if (jsonData[0].hasOwnProperty(key) && !keysToOmit.includes(key)) {
+    //         tableRows += `<th style="border: 1px solid #ddd; padding: 8px; text-align: left;">${key}</th>`;
+    //       }
+    //     }
+    //     tableRows += '</tr>';
       
-        // Create data rows
-        jsonData.forEach((record, index) => {
-          tableRows += `<tr${index % 2 === 0 ? ' style="background-color: #f9f9f9;"' : ''}>`;
-          for (const key in record) {
-            if (record.hasOwnProperty(key) && !keysToOmit.includes(key)) {
-              tableRows += `<td style="border: 1px solid #ddd; padding: 8px; text-align: left;">${record[key]}</td>`;
-            }
-          }
-          tableRows += '</tr>';
-        });
+    //     // Create data rows
+    //     jsonData.forEach((record, index) => {
+    //       tableRows += `<tr${index % 2 === 0 ? ' style="background-color: #f9f9f9;"' : ''}>`;
+    //       for (const key in record) {
+    //         if (record.hasOwnProperty(key) && !keysToOmit.includes(key)) {
+    //           tableRows += `<td style="border: 1px solid #ddd; padding: 8px; text-align: left;">${record[key]}</td>`;
+    //         }
+    //       }
+    //       tableRows += '</tr>';
+    //     });
       
-        return tableRows;
-      }
+    //     return tableRows;
+    //   }
       
 
 
@@ -116,7 +112,7 @@ const TanstackTable =() =>{
     const [data, setData] = useState([]);
     const [filteredData,setFilteredData]=useState([])
 
-    const [expandedRows, setExpandedRows] = useState([]);
+    // const [expandedRows, setExpandedRows] = useState([]);
 
     const columns = [
         {
@@ -179,35 +175,35 @@ const TanstackTable =() =>{
             cell: (row,index) => (
                 row.status === 1
                     ? <button className="table-button" onClick={()=> handleClickNotify(index)} >Notify</button>
-                    : row.status == 2
+                    : row.status === 2
                         ? <><button className="table-button" onClick={()=> handleClickMore(row)} >expand</button></>
                         :<></>
             ),
         },
     ];
 
-  const handleExpandRow = (row) => {
-    console.log("***")
+//   const handleExpandRow = (row) => {
+//     console.log("***")
    
-    let temp=filteredData
-    axios
-    .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
-    .then(
-        (res)=>{
-            //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
-           //console.log(res.data.userCriminalRecords[0])
-            temp[row.index].userCriminalRecords=res.data.userCriminalRecords;
-            setFilteredData(temp)
-            console.log(filteredData)
+//     let temp=filteredData
+//     axios
+//     .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
+//     .then(
+//         (res)=>{
+//             //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
+//            //console.log(res.data.userCriminalRecords[0])
+//             temp[row.index].userCriminalRecords=res.data.userCriminalRecords;
+//             setFilteredData(temp)
+//             console.log(filteredData)
            
-        }
-    ).catch((err)=>{
-        console.log(err)
-    })
-  };
+//         }
+//     ).catch((err)=>{
+//         console.log(err)
+//     })
+//   };
 
 
- const expandableRowsComponent= (data) => <pre><b>{JSON.stringify(data, null, 2)}</b></pre>
+//  const expandableRowsComponent= (data) => <pre><b>{JSON.stringify(data, null, 2)}</b></pre>
 
 
 
@@ -216,7 +212,7 @@ const TanstackTable =() =>{
   const handleClickNotify = (index)=>{
 
     axios.put(
-        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/updateStatus?requestId=${filteredData[index].NIC}`,
+        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/updateStatus?requestId=${filteredData[index].req_id}`,
     
     )
         .then((res) => {
