@@ -1,16 +1,40 @@
-import React , {useState} from 'react';
+import React , {useState, useEffect} from 'react';
 import { Form, InputGroup } from 'react-bootstrap';
 import CustomButton from '../../Components/CustomButton/custombutton';
 import Select from 'react-select';
+import axios from 'axios';  
 
 const ApplicationForm = ({ formik }) => {
 
-const [selectedGramaSevaDivision, setSelectedGramaSevaDivision] = useState(null);
-const gramaSevaDivisionOptions = [
-    { value: 'division1', label: 'Division 1' },
-    { value: 'division2', label: 'Division 2' },
-    // Add more divisions as needed
-];
+  const [selectedGramaSevaDivision, setSelectedGramaSevaDivision] = useState(null);
+  const [gramaSevaDivisionOptions, setGramaSevaDivisionOptions] = useState([]);
+// const gramaSevaDivisionOptions = [
+//     { value: 'division1', label: 'Division 1' },
+//     { value: 'division2', label: 'Division 2' },
+//     // Add more divisions as needed
+// ];
+
+useEffect(() => {
+  const fetchGramaSevaDivisionOptions = async () => {
+    try {
+      const response = await axios.get(
+        `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/address-check-service-zcw/gramasevadivision-9d8/v1.0/allGramasevaDivisions`
+      );
+      const options = response.data.map((division) => ({
+        value: division.division_id,
+        label: division.div_name,
+      }));
+
+      setGramaSevaDivisionOptions(options);
+    } catch (error) {
+      console.error('Error occurred while getting divisions', error);
+    }
+  };
+
+  fetchGramaSevaDivisionOptions();
+}, [formik]); // Include formik as a dependency
+
+
 
   return (
 
@@ -149,36 +173,24 @@ const gramaSevaDivisionOptions = [
             </div>
 
             <div className="input-field-div">
-              <InputGroup className={`mb-3`}>
-                {/* <InputGroup.Text id="gramaSevaDivision-label">Grama Seva Division</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  id="gramaSevaDivision"
-                  name="gramaSevaDivision"
-                  value={formik.values.gramaSevaDivision}
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  aria-label="Grama Seva Division"
-                  aria-describedby="gramaSevaDivision-label"
-                /> */}
-                {/* <InputGroup.Text id="gramaSevaDivision-label" className="select-lable">Grama Seva Division</InputGroup.Text> */}
-              <Select
-                id="gramaSevaDivision"
-                name="gramaSevaDivision"
-                value={selectedGramaSevaDivision}
-                onChange={(selectedOption) => {
-                  formik.setFieldValue('gramaSevaDivision', selectedOption ? selectedOption.value : '');
-                  setSelectedGramaSevaDivision(selectedOption);
-                }}
-                options={gramaSevaDivisionOptions}
-                isSearchable
-                placeholder="Select Grama Seva Division"
-                className="select-field"
-              />
-              </InputGroup>
-              {formik.touched.gramaSevaDivision && formik.errors.gramaSevaDivision && (
-                <div className="error-message">{formik.errors.gramaSevaDivision}</div>
-              )}
+            <InputGroup className={`mb-3 class-select-field`} >
+          <Select
+            id="gramaSevaDivision"
+            name="gramaSevaDivision"
+            value={selectedGramaSevaDivision}
+            onChange={(selectedOption) => {
+              formik.setFieldValue('gramaSevaDivision', selectedOption ? selectedOption.value : '');
+              setSelectedGramaSevaDivision(selectedOption);
+            }}
+            options={gramaSevaDivisionOptions}
+            isSearchable
+            placeholder="Select Grama Seva Division"
+            className="select-field"
+          />
+        </InputGroup>
+        {formik.touched.gramaSevaDivision && formik.errors.gramaSevaDivision && (
+          <div className="error-message">{formik.errors.gramaSevaDivision}</div>
+        )}
             </div>
             <CustomButton type="submit" onSubmit={() => formik.handleSubmit()}>Submit Application</CustomButton>
           </form>

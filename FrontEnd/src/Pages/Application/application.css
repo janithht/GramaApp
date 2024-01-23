@@ -97,11 +97,20 @@
   width: 100%;
   border-bottom-left-radius: 0;
   border-top-left-radius: 0;
+
+ 
 }
 
-/* .select-lable {
-  
-} */
+.class-select-field:focus{
+  transition: border-color 0.3s;
+}
+
+.class-select-field:focus{
+  border-color: #6f42c1; /* Change border color to blue when focused */
+      outline: none; /* Remove default browser focus outline */
+      box-shadow: 0 0 10px #6f42c1;
+}
+
 
 @media (max-width: 1000px) {
   .main-form-container {
