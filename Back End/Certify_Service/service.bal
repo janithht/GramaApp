@@ -16,6 +16,18 @@ service /gramaCertificate on new http:Listener(9093) {
         return certificate_requests;
     }
 
+    resource function get getUserRequest(string email) returns Request[]|error {
+
+        Request[] certificate_requests = [];
+        stream<Request, error?> resultStream = certifyDb->query(`SELECT * from certificaterequest where email = ${email}`);
+        check from Request req in resultStream
+            do {
+                certificate_requests.push(req);
+            };
+        check resultStream.close();
+        return certificate_requests;
+    }
+
     resource function post addCertificateRequest(@http:Payload NewRequest req) returns int|error? {
         
         return addCertificateRequest(req);
