@@ -49,6 +49,11 @@ public type Request record{|
     readonly int address_check;
     readonly int police_check;
     readonly int status;
+    string no;
+    string street1;
+    string street2;
+    string city;
+    string postalcode;
     readonly string date_submitted;
 |};
 
