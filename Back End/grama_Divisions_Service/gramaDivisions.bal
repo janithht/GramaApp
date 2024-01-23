@@ -1,6 +1,7 @@
 import ballerina/http;
 import ballerinax/mysql;
 import ballerinax/mysql.driver as _;
+import ballerina/sql;
 
 
 configurable string USER = ?;
@@ -54,6 +55,21 @@ service /gramaDivisions on new http:Listener(9099) {
        };
 
         return grmaDivisionResponse;
+    }
+
+
+      resource function get gramaDivisionById(int divisionId) returns GramaDivision|http:NotFound |error {
+
+        
+        GramaDivision|sql:Error result = nationaldb->queryRow(`SELECT * FROM grama_division_information WHERE divisionId = ${divisionId}`);
+
+        // Check if record is available or not
+        if result is sql:NoRowsError {
+            return http:NOT_FOUND;
+        } else {
+            return result;
+        }
+    
     }
 
 }
