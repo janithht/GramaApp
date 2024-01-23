@@ -9,6 +9,7 @@ import axios from 'axios';
 import { toast } from 'react-toastify';
 import ConfirmationModal from "./confirmationmodal.jsx"
 import ApplicationForm from  "./applicationform.jsx"
+import ValidationModal from './validationmodal.jsx';
 
 
 const Application = () => {
@@ -16,6 +17,19 @@ const Application = () => {
     const [showModal, setShowModal] = useState(false);
     const {state, getBasicUserInfo } = useAuthContext() || {};
     const [userEmail, setUserEmail] = useState();
+    const [nicValidationModal, setNicValidationModal] = useState(false);
+
+    // const [userDetails, setUserDetails] = useState();
+  
+  useEffect(() => {
+    
+    getBasicUserInfo().then((response) => { 
+      console.log(response.email);
+      setUserEmail(response.email);
+    });
+    
+  }, [getBasicUserInfo]);
+
 
     const validateField = (field, value) => {
       try {
@@ -39,46 +53,68 @@ const Application = () => {
 
     const handleSubmit = async (values, actions) => {
 
-      // Format the phone number before submission
-      const formattedPhoneNumber = formatPhoneNumber(values.tele);
+      const nicValidationResult = await validateNIC(values.nic);
 
-      // Validate all fields before submission
-      const errors = handleValidation({ ...values, tele: formattedPhoneNumber });
-  
-      if (Object.keys(errors).length > 0) {
-        actions.setErrors(errors);
-      } else {
+        if (nicValidationResult === 0) {
+        // Format the phone number before submission
+        const formattedPhoneNumber = formatPhoneNumber(values.tele);
 
-        const requestData = {
-          NIC: values.nic,
-          city: values.city,
-          division_id: parseInt(values.gramaSevaDivision, 10), 
-          email: userEmail,
-          no: values.addressNumber,
-          phoneNo: formattedPhoneNumber,
-          postalcode: values.postalcode,
-          street1: values.street1,
-          street2: values.street2,            
-        };
-
-        try {
-          console.log("aaaa",requestData);
-          const response = await axios.post(
-            'https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/addCertificateRequest',
-            requestData
-          );
+        // Validate all fields before submission
+        const errors = handleValidation({ ...values, tele: formattedPhoneNumber });
     
-          console.log('API response:', response.data);
-          setShowModal(true);
-        } catch (error) {
-          console.error('Error occurred while submitting form:', error);
-              toast.error('Error occurred while submitting form:', error);
-              if (error.response) {
-                  console.error('Response Data:', error.response.data);
-                  console.error('Response Status:', error.response.status);
-                  console.error('Response Headers:', error.response.headers);
-              }
+        if (Object.keys(errors).length > 0) {
+          actions.setErrors(errors);
+        } else {
+          const requestData = {
+            NIC: values.nic,
+            city: values.city,
+            division_id: parseInt(values.gramaSevaDivision, 10), 
+            email: userEmail,
+            no: values.addressNumber,
+            phoneNo: formattedPhoneNumber,
+            postalcode: values.postalcode,
+            street1: values.street1,
+            street2: values.street2,            
+          };
+
+          try {
+            console.log("aaaa",requestData);
+            const response = await axios.post(
+              'https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/addCertificateRequest',
+              requestData
+            );
+      
+            console.log('API response:', response.data);
+            setShowModal(true);
+          } catch (error) {
+            console.error('Error occurred while submitting form:', error);
+            toast.error('Error occurred while submitting form:', error);
+            if (error.response) {
+              console.error('Response Data:', error.response.data);
+              console.error('Response Status:', error.response.status);
+              console.error('Response Headers:', error.response.headers);
+            }
+          }
         }
+      }else{
+        console.log(nicValidationResult);
+        setNicValidationModal(true);  
+      }
+    };
+
+    const validateNIC = async (nic) => {  
+      try {
+        console.log("eeee");
+        const response = await axios.get(
+          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/identity-service-auh/identitycheck-56c/v1.0/users?NIC=${nic}`
+        );
+        console.log(response);
+        
+        // Check the response to see if the NIC exists
+        return response.data;
+      } catch (error) {
+        console.error('Error occurred while validating NIC:', error);
+        return -1; // Error occurred during NIC validation
       }
     };
 
@@ -115,13 +151,6 @@ const Application = () => {
         return cleanedPhoneNumber;
       }
     };
-  
-    useEffect(() => {
-        getBasicUserInfo().then((response) => {
-        setUserEmail(response.email);
-        console.log("email : ",response.email);
-        });
-    }, [getBasicUserInfo]);
 
   return (
     <div className='full-container'>
@@ -139,6 +168,7 @@ const Application = () => {
         </div>
       </div>
       <ConfirmationModal showModal={showModal} setShowModal={setShowModal}/>
+      <ValidationModal showModal={nicValidationModal} setNicValidationModal={setNicValidationModal} />
     </div>
   );
 };
