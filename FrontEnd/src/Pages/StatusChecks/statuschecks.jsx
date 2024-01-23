@@ -5,17 +5,19 @@ import { FaChevronDown, FaChevronUp, FaCheck, FaTimes } from 'react-icons/fa';
 import { IoCheckmarkCircleSharp , IoCloseCircle } from 'react-icons/io5';
 import statusCheck from "../../Assets/Status.png";
 import axios from 'axios';
+import { useAuthContext } from "@asgardeo/auth-react";
 
 
 const StatusChecks = () => {
     const [data, setData] = useState([]);
     const [expandedRows, setExpandedRows] = useState([]);
+    const {state, getBasicUserInfo } = useAuthContext() || {};
   
     useEffect(() => {
       // Fetch data from the API
       const fetchData = async () => {
         try {
-          const response = await axios.get('https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/allCertRequests');
+          const response = await axios.get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/getUserRequest?email=${state.email}`);
           setData(response.data);
         } catch (error) {
           console.error('Error fetching data:', error);
@@ -80,7 +82,7 @@ const StatusChecks = () => {
                       {/* <td>{rowData.email}</td> */}
                       <td>{rowData.phoneNo}</td>
                       <td>
-                        <span className={`status-badge ${rowData.status === 1 ? 'status-rejected' : (rowData.status === 2 ? 'status-approved' : 'status-completed')}`}>
+                        <span className={`status-badge ${rowData.status === 1 ? 'status-approved' : (rowData.status === 2 ? 'status-rejected' : 'status-completed')}`}>
                             {getStatusText(rowData.status)}
                         </span>
                       </td>
@@ -100,13 +102,13 @@ const StatusChecks = () => {
                         <td colSpan="6">
                           <div className="expanded-row-div">
                             <p>
-                              Police Check: {rowData.police_check ? <IoCheckmarkCircleSharp className="check-icon" /> : <IoCloseCircle  className="cross-icon" />}
+                              Police Check: {rowData.police_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" />}
                             </p>
                             <p>
-                              Address Check: {rowData.address_check ? <IoCheckmarkCircleSharp className="check-icon" /> : <IoCloseCircle  className="cross-icon" />}
+                              Address Check: {rowData.address_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" /> }
                             </p>
                             <p>
-                              Identity Check: {rowData.identity_check ? <IoCheckmarkCircleSharp className="check-icon" /> : <IoCloseCircle  className="cross-icon" />}
+                              Identity Check: {rowData.identity_check ? <IoCloseCircle  className="cross-icon" /> : <IoCheckmarkCircleSharp className="check-icon" />}
                             </p>
                           </div>
                         </td>
