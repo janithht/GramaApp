@@ -8,30 +8,19 @@ import Swal from 'sweetalert2'
 
 
 
-
 const handleClickMore = (row)=>{
 
     axios
     .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
     .then(
         (res)=>{
-            //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
-           //console.log(res.data.userCriminalRecords[0]
-        //    console.log("123***");
-        //    console.log(res.data.userCriminalRecords);
-        //     console.log("789***");
-
-
+   
             Swal.fire({
               
                 width:800,
                 html: `
                  <p>Criminal Record Infomation</p>
-                <table>${formatTableFromJson(res.data.userCriminalRecords)}</table>
-                
-                `,
-             
-            
+                <table>${formatTableFromJson(res.data.userCriminalRecords)}</table> `,
             });
         
 
@@ -65,8 +54,7 @@ const handleClickMore = (row)=>{
             }
           }
           tableRows += '</tr>';
-        });
-      
+        });   
         return tableRows;
       }
       
@@ -75,8 +63,6 @@ const handleClickMore = (row)=>{
         const formattedDate = `${dateObj.year}-${dateObj.month}-${dateObj.day}`;
         return formattedDate;
       }
-
-
 
 }
 
@@ -170,31 +156,6 @@ const TanstackTable =() =>{
         },
     ];
 
-//   const handleExpandRow = (row) => {
-//     console.log("***")
-   
-//     let temp=filteredData
-//     axios
-//     .get(`https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/police-check-service-rop/policecheck-f88/v1.0/checkCriminalRecords?NIC=${row.NIC}`)
-//     .then(
-//         (res)=>{
-//             //const ids =res.data.map((row)=>({a:row.id,n:row.name}))
-//            //console.log(res.data.userCriminalRecords[0])
-//             temp[row.index].userCriminalRecords=res.data.userCriminalRecords;
-//             setFilteredData(temp)
-//             console.log(filteredData)
-           
-//         }
-//     ).catch((err)=>{
-//         console.log(err)
-//     })
-//   };
-
-
-//  const expandableRowsComponent= (data) => <pre><b>{JSON.stringify(data, null, 2)}</b></pre>
-
-
-
 
 
   const handleClickNotify = (index)=>{
@@ -205,7 +166,11 @@ const TanstackTable =() =>{
     )
         .then((res) => {
             // Handle the response if needed
+            const updatedData = [...filteredData];
+            updatedData[index].status = 3; // Assuming 3 represents 'Notified'
+            setFilteredData(updatedData);
         })
+        
         .catch((err) => {
             console.error(err);
         });
@@ -247,8 +212,6 @@ const TanstackTable =() =>{
 
 
 
-
-
   useEffect(() => {
     setLoading(true);
     axios
@@ -277,8 +240,6 @@ const TanstackTable =() =>{
         setFilteredData(temp)
     }
 
-    
-
 
     return(
         <>
@@ -293,9 +254,6 @@ const TanstackTable =() =>{
             progressPending={isLoading} 
             progressComponent={<CircleLoader color="#36d7b7" />}
             pagination={true}
-            // expandableRows={true}
-            // onRowExpandToggled={(status,row)=>handleExpandRow(row)}
-            // expandableRowsComponent={expandableRowsComponent}
            
         />
         </>
