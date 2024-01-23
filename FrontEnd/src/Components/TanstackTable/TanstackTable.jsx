@@ -308,9 +308,9 @@ const TanstackTable =() =>{
             progressPending={isLoading} 
             progressComponent={<CircleLoader color="#36d7b7" />}
             pagination={true}
-            expandableRows={true}
-            onRowExpandToggled={(status,row)=>handleExpandRow(row)}
-            expandableRowsComponent={expandableRowsComponent}
+            // expandableRows={true}
+            // onRowExpandToggled={(status,row)=>handleExpandRow(row)}
+            // expandableRowsComponent={expandableRowsComponent}
            
         />
         </>
