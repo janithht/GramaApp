@@ -22,6 +22,7 @@ import {
   CSpinner,
 } from "@coreui/react";
 import { getToken } from "../../Utils/getToken.js";
+import { useAuthContext } from "@asgardeo/auth-react";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -30,6 +31,14 @@ const Dashboard = () => {
   const [chatHistory, setChatHistory] = useState([]);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
+  const { state, getBasicUserInfo } = useAuthContext() || {};
+
+  useEffect(() => {
+    state?.isAuthenticated &&
+    getBasicUserInfo().then((response) => {
+      console.log(response);
+    });
+  }, [getBasicUserInfo, state?.isAuthenticated]);
 
   const handleToken = async () => {
     const token = await getToken();
