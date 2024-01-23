@@ -70,6 +70,7 @@ const TanstackTable =() =>{
     const [isLoading,setLoading]=useState(true);
     const [data, setData] = useState([]);
     const [filteredData,setFilteredData]=useState([])
+    const [selectedGramaDivision, setSelectedGramaDivision] = useState('');
 
     // const [expandedRows, setExpandedRows] = useState([]);
 
@@ -234,6 +235,12 @@ const TanstackTable =() =>{
 
     const onSearch=(event)=>{
         let temp= data.filter((row)=>row.NIC.includes(event.target.value))
+      
+        // Filter by selected Grama division, if any
+        if (selectedGramaDivision) {
+        temp = temp.filter((row) => row.division_id === selectedGramaDivision);
+  }
+
         temp.forEach((row,index)=>{
             row.index=index;
         })
@@ -241,10 +248,35 @@ const TanstackTable =() =>{
     }
 
 
+    const handleGramaDivisionChange = (event) => {
+        const selectedDivision = event.target.value;
+        setSelectedGramaDivision(selectedDivision);
+    
+        // Filter data based on the selected Grama division
+        let temp = data;
+        if (selectedDivision) {
+          temp = temp.filter((row) => row.division_id == selectedDivision);
+        }
+    
+        temp.forEach((row, index) => {
+          row.index = index;
+        });
+        setFilteredData(temp);
+      };
+
+
     return(
         <>
         <div className="searchBar" >
         <input id="searchQueryInput" placeholder="Search" type="text" onChange={onSearch} />
+       
+        <select value={selectedGramaDivision} onChange={handleGramaDivisionChange}>
+          <option value="">All Divisions</option>
+          <option value="1">Division 1</option>
+          <option value="84">Division 84</option>
+          {/* Add more options based on your data */}
+        </select>
+       
         </div>
 
         <DataTable 
