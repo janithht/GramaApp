@@ -1,56 +1,156 @@
-import React, { useState } from 'react';
+import React, {useState,useEffect} from 'react';
+import { useFormik } from 'formik';
 import MenuBar from '../../Components/MenuBar/menubar.jsx';
 import "./application.css";
 import applyCertificate from "../../Assets/Apply.png";
-import CustomButton from "../../Components/CustomButton/custombutton.jsx";
 import validationSchema from "./validationSchema.js";
-import Form from 'react-bootstrap/Form';
-import InputGroup from 'react-bootstrap/InputGroup';
+import { useAuthContext } from "@asgardeo/auth-react";
+import axios from 'axios';
+import { toast } from 'react-toastify';
+import ConfirmationModal from "./confirmationmodal.jsx"
+import ApplicationForm from  "./applicationform.jsx"
+import ValidationModal from './validationmodal.jsx';
+
 
 const Application = () => {
-  const [tele, setTele] = useState('');
-  const [nic, setNIC] = useState('');
-  const [addressNumber, setAddressNumber] = useState('');
-  const [street1, setStreet1] = useState('');
-  const [street2, setStreet2] = useState('');
-  const [city, setCity] = useState('');
-  const [gramaSevaDivision, setGramaSevaDivision] = useState('');
-  const [validationErrors, setValidationErrors] = useState({});
+    
+    const [showModal, setShowModal] = useState(false);
+    const {state, getBasicUserInfo } = useAuthContext() || {};
+    const [userEmail, setUserEmail] = useState();
+    const [nicValidationModal, setNicValidationModal] = useState(false);
 
-  const gramaSevaDivisionOptions = [
-    { value: 'division1', label: 'Division 1' },
-    { value: 'division2', label: 'Division 2' },
-  ];
+    // const [userDetails, setUserDetails] = useState();
+  
+  useEffect(() => {
+    
+    getBasicUserInfo().then((response) => { 
+      console.log(response.email);
+      setUserEmail(response.email);
+    });
+    
+  }, [getBasicUserInfo]);
 
-  const handleTeleChange = (e) => setTele(e.target.value);
-  const handleNICChange = (e) => setNIC(e.target.value);
-  const handleAddressNumberChange = (e) => setAddressNumber(e.target.value);
-  const handleStreet1Change = (e) => setStreet1(e.target.value);
-  const handleStreet2Change = (e) => setStreet2(e.target.value);
-  const handleCityChange = (e) => setCity(e.target.value);
-  const handleGramaSevaDivisionChange = (e) => setGramaSevaDivision(e.target.value);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
+    const validateField = (field, value) => {
+      try {
+        validationSchema.fields[field].validateSync(value);
+        return ''; // No error
+      } catch (error) {
+        return error.message;
+      }
+    };
 
-    validationSchema.validate({
-      tele,
-      nic,
-      addressNumber,
-      street1,
-      street2,
-      city,
-      gramaSevaDivision,
-    }, { abortEarly: false })
-      .then(() => console.log('Form is valid. Submitting...'))
-      .catch((err) => {
-        const errors = {};
-        err.inner.forEach((error) => {
-          errors[error.path] = error.message;
-        });
-        setValidationErrors(errors);
+    const handleValidation = (values) => {
+      const errors = {};
+      Object.keys(values).forEach((field) => {
+        const errorMessage = validateField(field, values[field]);
+        if (errorMessage) {
+          errors[field] = errorMessage;
+        }
       });
-  };
+      return errors;
+    };
+
+    const handleSubmit = async (values, actions) => {
+
+      const nicValidationResult = await validateNIC(values.nic);
+
+        if (nicValidationResult === 0) {
+        // Format the phone number before submission
+        const formattedPhoneNumber = formatPhoneNumber(values.tele);
+
+        // Validate all fields before submission
+        const errors = handleValidation({ ...values, tele: formattedPhoneNumber });
+    
+        if (Object.keys(errors).length > 0) {
+          actions.setErrors(errors);
+        } else {
+          const requestData = {
+            NIC: values.nic,
+            city: values.city,
+            division_id: parseInt(values.gramaSevaDivision, 10), 
+            email: userEmail,
+            no: values.addressNumber,
+            phoneNo: formattedPhoneNumber,
+            postalcode: values.postalcode,
+            street1: values.street1,
+            street2: values.street2,            
+          };
+
+          try {
+            console.log("aaaa",requestData);
+            const response = await axios.post(
+              'https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/certify-service/gramacertificate-b76/v1.0/addCertificateRequest',
+              requestData
+            );
+      
+            console.log('API response:', response.data);
+            setShowModal(true);
+          } catch (error) {
+            console.error('Error occurred while submitting form:', error);
+            toast.error('Error occurred while submitting form:', error);
+            if (error.response) {
+              console.error('Response Data:', error.response.data);
+              console.error('Response Status:', error.response.status);
+              console.error('Response Headers:', error.response.headers);
+            }
+          }
+        }
+      }else{
+        console.log(nicValidationResult);
+        setNicValidationModal(true);  
+      }
+    };
+
+    const validateNIC = async (nic) => {  
+      try {
+        console.log("eeee");
+        const response = await axios.get(
+          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/identity-service-auh/identitycheck-56c/v1.0/users?NIC=${nic}`
+        );
+        console.log(response);
+        
+        // Check the response to see if the NIC exists
+        return response.data;
+      } catch (error) {
+        console.error('Error occurred while validating NIC:', error);
+        return -1; // Error occurred during NIC validation
+      }
+    };
+
+    const formik = useFormik({
+      initialValues: {
+        tele: '',
+        nic: '',
+        addressNumber: '',
+        street1: '',
+        street2: '',
+        city: '',
+        postalcode: '',
+        gramaSevaDivision: '',
+      },
+      validationSchema: validationSchema,
+      onSubmit: (values, actions) => {
+        handleSubmit(values, actions);
+      },
+    });
+
+    const formatPhoneNumber = (phoneNumber) => {
+      // Remove spaces and dashes
+      const cleanedPhoneNumber = phoneNumber.replace(/[\s-]/g, '');
+    
+      // Check if the number starts with '0'
+      if (cleanedPhoneNumber.startsWith('0')) {
+        // Convert '0xxxxxxxxx' to '+94xxxxxxxxx'
+        return `+94${cleanedPhoneNumber.substring(1)}`;
+      } else if (cleanedPhoneNumber.startsWith('+940')) {
+        // Convert '+940xxxxxxxx' to '+94xxxxxxxxx'
+        return `+94${cleanedPhoneNumber.substring(4)}`;
+      } else {
+        // Keep the number as it is
+        return cleanedPhoneNumber;
+      }
+    };
 
   return (
     <div className='full-container'>
@@ -64,122 +164,11 @@ const Application = () => {
           <img className="side-image" src={applyCertificate} alt="Description" />
         </div>
         <div className="form-container">
-          <form className='application-form' onSubmit={handleSubmit}>
-            <div className="input-field-div" >
-              <InputGroup className={`mb-3 ${validationErrors.tele ? 'error' : ''}`}>
-                <InputGroup.Text id="name-label">Telephone Number</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="Telephone Number"
-                  value={tele}
-                  onChange={handleTeleChange}
-                  aria-label="Telephone Number"
-                  aria-describedby="name-label"
-                />
-              </InputGroup>
-              {validationErrors.tele && <div className="error-message">{validationErrors.tele}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.nic ? 'error' : ''}`}>
-                <InputGroup.Text id="nic-label">NIC</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="NIC"
-                  value={nic}
-                  onChange={handleNICChange}
-                  aria-label="NIC"
-                  aria-describedby="nic-label"
-                />
-              </InputGroup>
-              {validationErrors.nic && <div className="error-message">{validationErrors.nic}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.addressNumber ? 'error' : ''}`}>
-                <InputGroup.Text id="address-label">Address Number</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="Address Number"
-                  value={addressNumber}
-                  onChange={handleAddressNumberChange}
-                  aria-label="Address Number"
-                  aria-describedby="address-label"
-                />
-              </InputGroup>
-              {validationErrors.addressNumber && <div className="error-message">{validationErrors.addressNumber}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.street1 ? 'error' : ''}`}>
-                <InputGroup.Text id="street1-label">Street 1</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="Street 1"
-                  value={street1}
-                  onChange={handleStreet1Change}
-                  aria-label="Street 1"
-                  aria-describedby="street1-label"
-                />
-              </InputGroup>
-              {validationErrors.street1 && <div className="error-message">{validationErrors.street1}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.street2 ? 'error' : ''}`}>
-                <InputGroup.Text id="street2-label">Street 2</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="Street 2"
-                  value={street2}
-                  onChange={handleStreet2Change}
-                  aria-label="Street 2"
-                  aria-describedby="street2-label"
-                />
-              </InputGroup>
-              {validationErrors.street2 && <div className="error-message">{validationErrors.street2}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.city ? 'error' : ''}`}>
-                <InputGroup.Text id="city-label">City</InputGroup.Text>
-                <Form.Control
-                  type="text"
-                  // placeholder="City"
-                  value={city}
-                  onChange={handleCityChange}
-                  aria-label="City"
-                  aria-describedby="city-label"
-                />
-              </InputGroup>
-              {validationErrors.city && <div className="error-message">{validationErrors.city}</div>}
-            </div>
-
-            <div className='input-field-div'>
-            <InputGroup className={`mb-3 ${validationErrors.gramaSevaDivision ? 'error' : ''}`}>
-                <InputGroup.Text id="division-label">Grama Seva Division</InputGroup.Text>
-                <Form.Control
-                  as="select"
-                  className="select-input"
-                  value={gramaSevaDivision}
-                  onChange={handleGramaSevaDivisionChange}
-                  aria-label="Grama Seva Division"
-                  aria-describedby="division-label"
-                >
-                  {gramaSevaDivisionOptions.map((option) => (
-                    <option key={option.value} value={option.value}>
-                      {option.label}
-                    </option>
-                  ))}
-                </Form.Control>
-              </InputGroup>
-              {validationErrors.gramaSevaDivision && <div className="error-message">{validationErrors.gramaSevaDivision}</div>}
-            </div>
-
-            <CustomButton type="submit">Submit Application</CustomButton>
-          </form>
+          <ApplicationForm formik={formik} />
         </div>
       </div>
+      <ConfirmationModal showModal={showModal} setShowModal={setShowModal}/>
+      <ValidationModal showModal={nicValidationModal} setNicValidationModal={setNicValidationModal} />
     </div>
   );
 };

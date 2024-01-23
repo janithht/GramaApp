@@ -1,4 +1,135 @@
+/* .menu-bar {
  .menu-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 40px;
+  background-color: hsl(291, 47%, 60%);
+  color: white;
+}
+
+
+.nav-menu{
+  display: flex;
+  flex-direction: row;
+}
+
+.menu-icon {
+  cursor: pointer;
+  display: none; 
+}
+
+.menu-icon:hover {
+  background-color: #A05B9D;
+  padding: 0px 4px;
+}
+
+.menu-icon:active {
+  background-color: #A05B9D;
+  padding: 0px 4px;
+}
+
+
+.menu-dot {
+  display: block;
+  width: 30px;
+  height: 4px;
+  background-color: white;
+  margin: 6px 0;
+  transition: 0.4s;
+}
+
+.mobile-menu {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 50px;
+  right: 10px;
+  background-color: #BA68C8;
+  padding: 10px;
+  z-index: 1;
+}
+
+.menu-item {
+  background-color: #BA68C8 !important;
+  color: white;
+  border: none !important;
+  padding: 10px;
+  text-align: left;
+  text-decoration: none;
+  display: block;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+  border-radius: 0px;
+}
+
+.menu-item:hover{
+  background-color: #A05B9D !important;
+}
+
+.menu-item:focus{
+  background-color: #A05B9D;
+}
+
+.grama-name{
+  margin-left: 50px;
+}
+
+.support-icon{
+  margin: 11px 25px 0px 2px;
+  padding: 2px;
+  cursor: pointer;
+}
+
+.support-icon:hover{
+  background-color: #A05B9D;
+  border-radius: 5px;
+}
+
+.user-name{
+  margin-left: 10px;
+  font-size: 1.2em;
+  color: white;
+  font-weight: 600;
+  padding: 12px 0px 0px 6px;
+}
+
+.mobile-username{
+  color: white;
+  width: fit-content;
+  padding: 12px 0px 0px 6px;
+  font-size: 16px;
+  text-decoration: none;
+}
+
+@media (min-width:601px) {
+  .mobile-menu{
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .menu-icon {
+    display: block;
+  }
+  .menu-bar {
+    justify-content: space-between;
+  }
+  .nav-menu{
+    display: none;
+  }
+  .support-icon{
+    margin: 13px 0px 0px 2px;
+  }
+  .user-name{
+    margin-left: 0px;
+    padding: 12px 0px 0px 0px;
+    display: none;
+  }
+} */
+
+.menu-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;

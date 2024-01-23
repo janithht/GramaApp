@@ -1,9 +1,8 @@
-
 .landing-page {
   text-align: center;
   padding: 20px;
 }
-.landing-page-header-logo-image{
+.landing-page-header-logo-image {
   width: 25%;
   height: 25%;
 }
@@ -67,13 +66,23 @@ footer {
   color: #777;
 }
 
+.magicpattern {
+  width: 100%;
+  height: 100vh;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: repeat;
+  background-image: url("../../Assets/background.svg");
+}
+
 @media screen and (max-width: 768px) {
   .welcome-image {
     display: none;
   }
-  .landing-page-header-logo-image{
+  .landing-page-header-logo-image {
     width: 50%;
     height: 50%;
+    margin-left: 55%;
   }
   .welcome-container {
     flex-direction: column;
@@ -86,5 +95,22 @@ footer {
   .welcome-text {
     text-align: center;
   }
-  
+  .magicpattern {
+    width: 100%;
+    height: 100vh;
+    background-size: cover;
+    background-position: center center;
+    background-repeat: repeat;
+    background-image: url("../../Assets/background-mobile.svg");
+  }
+}
+@media screen and (max-width: 420px) {
+  .landing-page-header-logo-image {
+    width: 60%;
+    height: 60%;
+    margin :0px;
+  }
+  .magicpattern{
+    background-image: url("../../Assets/background-mini-mobile.svg");
+  }
 }
