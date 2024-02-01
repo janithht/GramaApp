@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import MenuBar from "../../Components/MenuBar/menubar.jsx";
 import "../../Components/MenuBar/menubar.css";
 import applyCertificate from "../../Assets/Apply.png";

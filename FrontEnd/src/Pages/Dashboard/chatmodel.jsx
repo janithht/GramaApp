@@ -30,6 +30,8 @@ const ChatModal = ({ visible, setVisible, }) => {
   useEffect(() => {
     setMessage("");
     handleToken();
+    console.log("visible from useEffect:", visible);
+    console.log("token from getMessage:", token);
     if (token !== "") {
       axios
         .get(
@@ -91,6 +93,7 @@ const ChatModal = ({ visible, setVisible, }) => {
 
   const handleSendMessage = () => {
     handleToken();
+    console.log("token from handleMesaage:", token);
     if (token !== "") {
       axios
         .post(
