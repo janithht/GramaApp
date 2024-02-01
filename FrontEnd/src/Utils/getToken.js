@@ -8,6 +8,9 @@ export const getToken = async () => {
   const headers = new Headers({
     "Content-Type": "application/x-www-form-urlencoded",
     Authorization: `Basic ${btoa(`${clientID}:${clientSecret}`)}`,
+    cors: {
+      allowOrigins: ["https://c45eda99-d5d6-4c4f-bed0-072a36d85d0b.e1-us-east-azure.choreoapps.dev"], // add front end host url here
+    },
   });
 
   const body = new URLSearchParams({
