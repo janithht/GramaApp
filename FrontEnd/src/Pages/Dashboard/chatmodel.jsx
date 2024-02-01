@@ -33,7 +33,7 @@ const ChatModal = ({ visible, setVisible, }) => {
     if (token !== "") {
       axios
         .get(
-          "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages",
+          "https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-prod.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/getMessages",
           {
             headers: {
               Accept: "application/scim+json",
@@ -94,7 +94,7 @@ const ChatModal = ({ visible, setVisible, }) => {
     if (token !== "") {
       axios
         .post(
-          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-dev.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
+          `https://cf3a4176-54c9-4547-bcd6-c6fe400ad0d8-prod.e1-us-east-azure.choreoapis.dev/bwsu/slackconnector-evm/slackservice-3b5/v1.0/sendMessage?message=${message}`,
           {},
           {
             headers: {
